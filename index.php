@@ -1,21 +1,21 @@
 <!doctype html>
-<html lang="en" data-bs-theme="auto">
-  <head><script src="../assets/js/color-modes.js"></script>
+<html lang="it" data-bs-theme="auto">
+  <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.112.5">
-    <title>Carousel Template · Bootstrap v5.3</title>
+    <title>Carousel</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+    <!--<link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">-->
+    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/color-modes.js"></script>
 
     
 
-    
-
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -89,11 +89,15 @@
       .bd-mode-toggle {
         z-index: 1500;
       }
+
+      .carousel-caption {
+        color:  #3f9cca;
+      }
     </style>
 
     
     <!-- Custom styles for this template -->
-    <link href="carousel.css" rel="stylesheet">
+    <link href="css/carousel.css" rel="stylesheet">
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -186,8 +190,8 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
         <div class="container">
+        <img src="images/image1.jpg" alt="">
           <div class="carousel-caption text-start">
             <h1>Example headline.</h1>
             <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p>
@@ -196,8 +200,8 @@
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
         <div class="container">
+        <img src="images/image2.jpg" alt="">
           <div class="carousel-caption">
             <h1>Another example headline.</h1>
             <p>Some representative placeholder content for the second slide of the carousel.</p>
@@ -206,8 +210,8 @@
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
         <div class="container">
+          <img src="images/image3.jpg" alt="">
           <div class="carousel-caption text-end">
             <h1>One more for good measure.</h1>
             <p>Some representative placeholder content for the third slide of this carousel.</p>
@@ -307,7 +311,6 @@
     <p>&copy; 2017–2023 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
   </footer>
 </main>
-<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
     </body>
 </html>
