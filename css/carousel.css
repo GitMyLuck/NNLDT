@@ -5,7 +5,7 @@
 body {
   padding-top: 3rem;
   padding-bottom: 3rem;
-  color: rgb(var(--bs-primary-text-emphasis));
+  /*color: rgb(var(--bs-primary-text-emphasis));*/
 }
 
 
@@ -19,6 +19,13 @@ body {
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
   bottom: 3rem;
+  background-color: rgba(153,180,209, 0.4);
+   backdrop-filter: blur(8px);
+  background-blend-mode: normal;
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: var(--bs-orange);
+  border: 3px solid rgba(153,180,209, 0.8);
   z-index: 10;
 }
 
@@ -27,6 +34,9 @@ body {
   height: 32rem;
 }
 
+.carousel-img {
+  min-width: 100%;
+}
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
@@ -57,13 +67,6 @@ body {
   letter-spacing: -.05rem;
 }
 
-/* rtl:end:remove */
-/*    NEW NAVBAR  
---------------------------------------------------*/
-
-.bg-dark     {
-  background-color: #3f9cca;
-}
 
 
 /* RESPONSIVE CSS

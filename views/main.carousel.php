@@ -19,7 +19,7 @@
       <div class="carousel-item">
         <div class="container">
         <img class="carousel-img" src="images/image2.jpg" alt="Immagine 2">
-          <div class="carousel-caption">
+          <div class="carousel-caption text-start">
             <h1>Secondo Titolo.</h1>
             <p>Qui inseriamo del testo per introdurre il secondo slide del carousel</p>
             <p><a class="btn btn-lg btn-primary" href="#">Leggi tutto..</a></p>
@@ -29,7 +29,7 @@
       <div class="carousel-item">
         <div class="container">
           <img class="carousel-img" src="images/image3.jpg" alt="Immagine 3">
-          <div class="carousel-caption text-end">
+          <div class="carousel-caption text-start">
             <h1>Ancora un bel titolo.</h1>
             <p>Qui inseriamo del testo per introdurre il carousel no 3</p>
             <p><a class="btn btn-lg btn-primary" href="#">Guarda la galleria</a></p>

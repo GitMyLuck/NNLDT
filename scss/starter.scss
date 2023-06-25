@@ -1,0 +1,68 @@
+// Override Bootstrap's Sass default variables
+//
+// Nearly all variables in Bootstrap are written with the `!default` flag.
+// This allows you to override the default values of those variables before
+// you import Bootstrap's source Sass files.
+//
+// Overriding the default variable values is the best way to customize your
+// CSS without writing _new_ styles. For example, change you can either change
+// `$body-color` or write more CSS that override's Bootstrap's CSS like so:
+// `body { color: red; }`.
+
+
+//
+// Bring in Bootstrap
+//
+
+// Option 1
+//
+// Import all of Bootstrap's CSS
+
+// @import "bootstrap/scss/bootstrap";
+
+// Option 2
+//
+// Place variable overrides first, then import just the styles you need. Note that some stylesheets are required no matter what.
+
+// Toggle global options
+$enable-gradients: true;
+$enable-shadows: true;
+
+//@import "../assets/dist/css/functions";
+
+
+@import "../assets/dist/css/bootstrap"; // Required
+
+
+
+
+@import "icon-list";
+
+// Customize some defaults
+$border-radius: .4rem;
+$success: #7952b3;
+
+body {
+  padding: 3rem 1.5rem;
+}
+
+// Style Bootstrap icons
+.bi {
+  fill: currentcolor;
+}
+// sfondo della barra header
+.bg-dark     {
+  background-color: #304b87 !important;
+}
+
+:root,
+[data-bs-theme=light] {
+  --bs-body-bg: #6b90bd;
+  --bs-body-color: #fff;
+}
+
+[data-bs-theme=dark] {
+  color-scheme: dark;
+  --bs-body-bg: #304b87;
+  --bs-body-color: #9cdcfe;
+}
