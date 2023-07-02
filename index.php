@@ -1,6 +1,6 @@
 
     <?php
-            include "php/db.inc.php";
+            include "php/config.ini.php";
             // head 
             include $viewFolder . $viewBlockFolder . "head.php";
             echo PHP_EOL . "<title>LDT Home</title>" . PHP_EOL;

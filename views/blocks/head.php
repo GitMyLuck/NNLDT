@@ -14,8 +14,16 @@
     <script src="assets/js/color-modes.js" type="text/javascript"></script>
 
     <!-- Custom styles for this template -->
-    <!--<link href="assets/dist/css/bootstrap.css" rel="stylesheet">-->
     <link href="scss/starter.css" rel="stylesheet">
     <link href="css/main-layout.css" rel="stylesheet">
     <link href="css/carousel.css" rel="stylesheet">
     <link href="css/news.css" rel="stylesheet">
+    <link href="css/footer.css" rel="stylesheet">
+
+    <?php
+      $result = "";
+      include "php/db.inc.php";
+      $conn = new FUNCT();
+      $result = $conn->doServer();
+      echo $result;
+    ?>
