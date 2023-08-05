@@ -21,14 +21,17 @@
     <link href="css/footer.css" rel="stylesheet">
 
     <?php
-      
-      $res = "";
+      //   Preleva le notizie e ponile in $news
       use App\SQLiteConnection;
       include "app/SQLiteConnection.php";
-      $query = "SELECT * FROM news";
       $conn = new SQLiteConnection();
-
-      $res = $conn->myQuery($query);
-
-      var_dump($res);
+      
+      // preleva le notizie dalla tabella news  
+      $news = array();
+      $query = "SELECT * FROM news";
+      $news = $conn->myQuery($query);
+      
+      // Distruggi connessione
+      $conn = null;
+      //var_dump($news);
     ?>

@@ -30,12 +30,13 @@ class SQLiteConnection {
 
         public function myQuery($query = null)
             {
+                $row = array();
                 $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
                 try {
                         $this->pdo  = new \PDO($dir, null, null, null);
-                        foreach ($this->pdo->query($query) as $row)
+                        foreach ($this->pdo->query($query, \PDO::FETCH_ASSOC) as $key=>$value)
                     {
-                        //echo $row["id"];
+                        $row[$key] = $value;
                     }
                         $this->pdo = null;
                         return $row;
