@@ -137,7 +137,6 @@ class CONNECT
 		{
 				$temp = '';
 				$temp_2 = '';
-				$temp_3 = '';
 				// da chiaro a base 64
 				$temp = base64_decode($string);
 				

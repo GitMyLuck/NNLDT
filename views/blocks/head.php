@@ -21,9 +21,14 @@
     <link href="css/footer.css" rel="stylesheet">
 
     <?php
-      $result = "";
-      include "php/db.inc.php";
-      $conn = new FUNCT();
-      $result = $conn->doServer();
-      echo $result;
+      
+      $res = "";
+      use App\SQLiteConnection;
+      include "app/SQLiteConnection.php";
+      $query = "SELECT * FROM news";
+      $conn = new SQLiteConnection();
+
+      $res = $conn->myQuery($query);
+
+      var_dump($res);
     ?>
