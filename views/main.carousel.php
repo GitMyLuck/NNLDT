@@ -1,15 +1,27 @@
 
 <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel" data-bs-theme="light">
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <?php
+            // rileva il numero di notizie contenute nella tabella 'news'
+            $num_news = count($news);
+            for ($n = 0 ; $n < $num_news ; $n++)
+            {
+            // class 'active per i pulsanti di navigazione
+            $active = "";
+            ($n == 0)?$active = "class=\"active\"" : $active;
+
+            $plus = $n + 1;
+
+            echo <<<HEREDOC
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="$n" $active aria-current="true" aria-label="Slide $plus"></button>
+HEREDOC;
+          }
+
+      ?>
     </div>
     <div class="carousel-inner">
     <?php
-
-          // rileva il numero di notizie contenute nella tabella 'news'
-          $num_news = count($news);
+          $data = "";
 
           for ($n = 0 ; $n < $num_news ; $n++)
           {
@@ -18,23 +30,30 @@
           // verso il 35 carattere o allo spazio immeditamente successivo)
           $longString = $news[$n]["testo"];
           $intro = substr($longString,0,strpos($longString,' ',35)) . " ...";
-            
+          
+          $data = date('d/m/Y', $news[$n]["data"]);
+
           $active = "";
           ($n == 0)?$active = "active" : $active;
+          // immagine
+          $image = $news[$n]["id"];
+          // titolo
+          $title = $news[$n]["titolo"];
           // costruzione del carousel per le notizie
-          $text = "<div class=\"carousel-item " . $active . "\">" . PHP_EOL .
-                  "<div class=\"container\">" . PHP_EOL .
-                  "<img class=\"carousel-img\" src=\"images/image" . $news[$n]["id"] . ".jpg\" alt=\"Immagine" . $news[$n]["id"] . "\" title=\"Immagine" . $news[$n]["id"] . "\">" . PHP_EOL;
+          echo <<<HEREDOC
+                        <div class="carousel-item $active">
+                          <div class="container">
+                            <img class="carousel-img" src="images/image$image.jpg" alt="Immagine$image" title="Immagine$image">
+                              <div class="carousel-caption text-start">
+                                  <h1>$title</h1>
+                                  <p class="opacity-75">$data</p>
+                                  <p class="opacity-75">$intro</p>
+                                  <p><a class="btn btn-lg btn-primary" href="#">Leggi ...</a></p>
+                              </div> <!--  end class carousel-caption -->
+                          </div><!--  end class container -->
+                        </div><!--  end class carousel-item -->
+HEREDOC;
 
-          $text .= "<div class=\"carousel-caption text-start\">" . PHP_EOL .
-                   "<h1>" . $news[$n]["titolo"] . "</h1>" . PHP_EOL . 
-                   "<p class=\"opacity-75\">" . $intro . "</p>" . PHP_EOL;
-
-          $text .= "<p><a class=\"btn btn-lg btn-primary\" href=\"#\">Leggi ...</a></p>" . PHP_EOL .
-                   "</div></div></div>" . PHP_EOL;
-
-          
-          echo $text;
 
           }
     ?>
