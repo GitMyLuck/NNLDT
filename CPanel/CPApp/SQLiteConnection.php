@@ -1,10 +1,10 @@
 <?php
-namespace App;
+namespace CPApp;
 include "Config.php";
 /**
  * SQLite connnection
  */
-class SQLiteConnection {
+class CPSQLiteConnection {
     /**
      * PDO instance
      * var type 
@@ -28,7 +28,9 @@ class SQLiteConnection {
 
         }
 
-        public function myQuery($query = null)
+           
+            //  funzione invocata dal ControlPanel (per motivi di indirizzo relativo)
+            public function myCPQuery($query = null)
             {
                 $row = array();
                 $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
@@ -48,7 +50,6 @@ class SQLiteConnection {
                 }
                 
             }
-           
-          
+    
 }
 ?>

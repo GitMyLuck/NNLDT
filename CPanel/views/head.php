@@ -1,5 +1,15 @@
 <!doctype html>
-<html lang="it" data-bs-theme="Light">
+<!-- ========== Start Light ========== -->
+<!--<html lang="it" data-bs-theme="Light"> -->
+<!-- ========== End ========== -->
+
+<!-- ========== Start Dark ========== -->
+<html lang="it" data-bs-theme="Dark">
+<!-- ========== End ========== -->
+
+<!-- ========== Start Auto ========== -->
+<!--<html lang="it" data-bs-theme="Auto"> -->
+<!-- ========== End Section ========== -->
   <head>
 
     <meta charset="utf-8">
