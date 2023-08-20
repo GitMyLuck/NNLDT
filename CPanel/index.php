@@ -4,6 +4,11 @@
             echo PHP_EOL . "<title>Control Panel</title>" . PHP_EOL;
             echo "</head>";
             echo PHP_EOL . "<body>" . PHP_EOL;
+            $result = "...";
+            if ((isset ($_GET["condition"])))
+            {
+              $result = "Login non Valido";
+            }
     ?>
 <main class="form-signin w-100 m-auto">
   <form action="login.php" method="post">
@@ -25,6 +30,7 @@
         Remember me
       </label>
     </div>
+    <div class="login-message"><?php echo $result; ?></div>
     <button class="btn btn-primary w-100 py-2" type="submit">Log in</button>
     <p class="mt-5 mb-3 text-body-secondary">&copy; LuccaDeltaTeam ®2011–2023</p>
   </form>

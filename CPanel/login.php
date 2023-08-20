@@ -1,19 +1,21 @@
 <?php
             
             include "views/head.php";
+            include "php/funct.class.php";
             echo PHP_EOL . "<title>Control Panel</title>" . PHP_EOL;
             echo "</head>";
             echo PHP_EOL . "<body>" . PHP_EOL;
-            $psw = $_POST["psw"];
-            $user = $_POST["email"];
-            //   Preleva le notizie e ponile in $news
+            $val = New Services();
+            $psw = $val->validate($_POST["psw"]);
+            $user = $val->validate($_POST["email"]);
+            //  Apri la connessione con il DB
              use CPApp\CPSQLiteConnection;
             include "CPApp/SQLiteConnection.php";
             $conn = new CPSQLiteConnection();
       
             // controlla le credeziali iserite
             $users = array();
-            $query = "SELECT * FROM users";
+            $query = "SELECT * FROM users WHERE username='$user' AND psw='$psw'";
             $users = $conn->myCPQuery($query);
 
             // Distruggi connessione
@@ -21,12 +23,14 @@
             //var_dump($news);
 
             // controllo delle credenziali inserite
-            foreach($users as $key => $value)   {
-                if (!!($s["username"] == $user))
+            
+                if (!(count($users)>0))
                     {
-                        header("Location: http://localhost:8000/index.php");
+                        header("Location: http://localhost:8000/index.php?condition=invalid");
                     }
-            }
+            
+
+            
 
     ?>
 
