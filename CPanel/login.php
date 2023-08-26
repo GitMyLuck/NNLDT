@@ -9,7 +9,7 @@
             $psw = $val->validate($_POST["psw"]);
             $user = $val->validate($_POST["email"]);
             //  Apri la connessione con il DB
-             use CPApp\CPSQLiteConnection;
+            use CPApp\CPSQLiteConnection;
             include "CPApp/SQLiteConnection.php";
             $conn = new CPSQLiteConnection();
       
