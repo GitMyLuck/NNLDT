@@ -1,7 +1,9 @@
 <?php
             
             include "views/head.php";
-            echo PHP_EOL . "<title>Control Panel</title>" . PHP_EOL;
+            include "CPApp/Config.php";
+            use CPApp\Config;
+            echo PHP_EOL . "<title>" . Config::HOME_PAGE . "</title>" . PHP_EOL;
             echo "</head>";
             echo PHP_EOL . "<body>" . PHP_EOL;
             $result = "...";
