@@ -1,7 +1,7 @@
 <!doctype html>
 
 <!-- ========== Start Dark ========== -->
-<html lang="it" data-bs-theme="light">
+<html lang="it" data-bs-theme="Light">
 <!-- ========== End ========== -->
 
 
