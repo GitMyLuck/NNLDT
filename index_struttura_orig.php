@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="it" data-bs-theme="auto">
+<html lang="it" data-bs-theme="light">
   <head>
 
     <meta charset="utf-8">
@@ -105,7 +105,7 @@
     ?>
 
     
-<header data-bs-theme="dark">
+<header data-bs-theme="light">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Lucca Delta Team</a>

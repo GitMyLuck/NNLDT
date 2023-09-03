@@ -1,4 +1,4 @@
-<header data-bs-theme="dark">
+<header data-bs-theme="light">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
       <img class="logo" src="images/Logo.png" alt="LOGO" />

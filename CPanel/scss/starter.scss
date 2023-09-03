@@ -55,8 +55,9 @@ body {
   background-color: #304b87 !important;
 }
 
-:root,
-[data-bs-theme=light] {
+/*root,*/
+/*[data-bs-theme=light] {
+  color-scheme: light;
   --bs-body-bg: #6b90bd;
   --bs-body-color: #fff;
 }
@@ -65,4 +66,4 @@ body {
   color-scheme: dark;
   --bs-body-bg: #304b87;
   --bs-body-color: #9cdcfe;
-}
+}*/

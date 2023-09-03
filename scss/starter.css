@@ -12479,7 +12479,6 @@ body {
 
 :root,
 [data-bs-theme=light] {
-  color-scheme: light;
   --bs-body-bg: #6b90bd;
   --bs-body-color: #fff;
 }

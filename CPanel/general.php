@@ -7,11 +7,15 @@
             echo "</head>";
             echo PHP_EOL . "<body>" . PHP_EOL;
 ?>
-
 <div class="container-fluid">
+<div class="text-center">
+  <div class="spinner-border" role="status">
+    
+  </div>
+</div>
 <div class="grid">
-<div class="col" style="background-color: blue;">
-<h2>Notizie</h2>
+<div class="col" style="background-color: blue;border-radius: 5px;">
+<h2>  Elenco Notizie</h2>
 <!--  inserire qua il inputs  -->
 <div class="list-group">
   <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
@@ -24,7 +28,7 @@
 </div>
 </div> 
 
-<p>&blank;</p>
+<p></p>
 
 <div class="col">
 <div class="accordion" id="accordionExample">
@@ -48,7 +52,20 @@
     </h2>
     <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      <!-- FORM Titolo  -->
+      <form method="POST" name="titolo" class="row g-3">
+            <div class="col-auto">
+            <label for="staticTitolo" class="visually-hidden">Titolo</label>
+            <input type="text" readonly class="form-control-plaintext" id="staticTitolo" value="Titolo della notizia">
+          </div>
+          <div class="col-auto">
+            <label for="inputTitolo" class="visually-hidden"></label>
+            <input type="text" class="form-control" name="titoloNotizia" id="inputTitolo" placeholder="text here...">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Invia</button>
+          </div>
+      </form>
       </div>
     </div>
   </div>    <!-- fine  Accordion-item  -->
