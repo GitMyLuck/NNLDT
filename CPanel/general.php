@@ -35,7 +35,7 @@ echo PHP_EOL . "<body>" . PHP_EOL;
                 Data Pubblicazione
               </button>
             </h2>
-            <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#accordion1">
+            <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#accordion1">
               <div class="accordion-body">
                 <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse
                 plugin adds the appropriate classes that we use to style each element. These classes control the overall
@@ -55,7 +55,7 @@ echo PHP_EOL . "<body>" . PHP_EOL;
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
                 Titolo
               </button>
             </h2>
