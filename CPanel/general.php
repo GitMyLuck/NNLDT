@@ -11,6 +11,8 @@ echo PHP_EOL . "<body>" . PHP_EOL;
 //  Apri la connessione con il DB
 use CPApp\CPSQLiteConnection;
 $conn = new CPSQLiteConnection();
+
+//  Preleva Array "news"   es Titolo = $news['titolo']
 $news = array();
 $query = "SELECT * FROM news";
 $news = $conn->myCPQuery($query);
@@ -25,15 +27,20 @@ $conn = null;
       <!--  inserire qua il inputs  -->
       <div class="list-group">
         <?php
+        $text = "";
         //  qui viene preparata la list group relativa alle notizie
-        
+        foreach ($news as $n)
+        {
+          $text .= '<button type="button" class="list-group-item list-group-item-action">' . PHP_EOL;
+          $text .= $n['titolo'] . '</button>' . PHP_EOL;
+
+        }
+        echo ($text);
         ?>
-        <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+        <!--<button type="button" class="list-group-item list-group-item-action active">
           Button selezionato
-        </button>
-        <button type="button" class="list-group-item list-group-item-action">Altra notizia</button>
-        <button type="button" class="list-group-item list-group-item-action">Titolo altra notizia ancora</button>
-        <button type="button" class="list-group-item list-group-item-action">ancora una notizia...</button>
+        </button>-->
+      
         <!--<button type="button" class="list-group-item list-group-item-action" disabled>A disabled button item</button>-->
       </div>
     </div>
