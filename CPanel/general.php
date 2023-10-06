@@ -1,19 +1,33 @@
 <?php
 
 include "views/head.php";
-include "CPApp/Config.php";
+include "CPApp/SQLiteConnection.php";
 use CPApp\Config;
 
 echo PHP_EOL . "<title>" . Config::GENERAL_PAGE . "</title>" . PHP_EOL;
 echo "</head>";
 echo PHP_EOL . "<body>" . PHP_EOL;
+
+//  Apri la connessione con il DB
+use CPApp\CPSQLiteConnection;
+$conn = new CPSQLiteConnection();
+$news = array();
+$query = "SELECT * FROM news";
+$news = $conn->myCPQuery($query);
+
+// Distruggi connessione
+$conn = null;
 ?>
 <div class="container-fluid">
   <div class="grid">
-    <div class="col-sm-6" style="background-color: #81a2c7;border-radius: 5px;">
-      <h2> Elenco Notizie</h2>
+    <div class="col-sm-6" style="background-color: #5076a0;border-radius: 5px;">
+      <h2>Elenco Notizie</h2>
       <!--  inserire qua il inputs  -->
       <div class="list-group">
+        <?php
+        //  qui viene preparata la list group relativa alle notizie
+        
+        ?>
         <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
           Button selezionato
         </button>
@@ -30,7 +44,7 @@ echo PHP_EOL . "<body>" . PHP_EOL;
         <div class="accordion" id="accordion1">
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1"
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1"
                 aria-expanded="false" aria-controls="collapse1">
                 Data Pubblicazione
               </button>
@@ -54,7 +68,7 @@ echo PHP_EOL . "<body>" . PHP_EOL;
         <div class="accordion" id="accordion2">
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              <button class="accordion-button" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
                 Titolo
               </button>
