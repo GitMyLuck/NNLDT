@@ -18,8 +18,16 @@
     <script src="assets/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script src="scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="assets/js/color-modes.js" type="text/javascript"></script>
+    <script src="scripts/gestioni.js" type="text/javascript"></script>
 
     <!-- Custom styles for this template -->
     <link href="scss/starter.css" rel="stylesheet">
     <link href="css/sign-in.css" rel="stylesheet">
+
+    <script type="text/javascript"> 
+			$(document).ready(function()
+      {
+          // code here
+      });
+    </script>
 

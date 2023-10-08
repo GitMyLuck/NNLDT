@@ -1,4 +1,7 @@
 <?php
+//  valore Id passato come parametro dalla chiamata
+$new_id = 2;
+
 
 include "views/head.php";
 include "CPApp/SQLiteConnection.php";
@@ -31,10 +34,13 @@ $conn = null;
         //  qui viene preparata la list group relativa alle notizie
         foreach ($news as $n)
         {
-          $text .= '<button type="button" class="list-group-item list-group-item-action">' . PHP_EOL;
+          $selected = "\"";
+          ($n['id'] == $new_id)?$selected = "active\" aria-current=\"true\"" : $selected = "\"";
+          $text .= '<button type="button" name="' . $n['id'] . '" class="list-group-item list-group-item-action ' . $selected . ' onclick="listClick(' . $n['id'] . ');">' . PHP_EOL;
           $text .= $n['titolo'] . '</button>' . PHP_EOL;
 
         }
+        //exit(var_dump($news));
         echo ($text);
         ?>
         <!--<button type="button" class="list-group-item list-group-item-action active">
