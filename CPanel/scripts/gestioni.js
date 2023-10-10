@@ -5,6 +5,7 @@ function listClick(listButton)
     // prelevo id della notizia selezionata
     var id = $(listButton).attr("name");
 
-
-    alert(id);
+    // provoco il redirect alla pagina con il
+    // numero di notizia indicato in $GET
+    location.href='general.php?id=' + id;
 }

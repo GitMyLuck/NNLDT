@@ -1,10 +1,8 @@
 <?php
-//  valore Id passato come parametro dalla chiamata
-$new_id = 2;
-
 
 include "views/head.php";
 include "CPApp/SQLiteConnection.php";
+include "php/bootstrap.layout.php";
 use CPApp\Config;
 
 echo PHP_EOL . "<title>" . Config::GENERAL_PAGE . "</title>" . PHP_EOL;
@@ -23,31 +21,25 @@ $news = $conn->myCPQuery($query);
 // Distruggi connessione
 $conn = null;
 
+
 ?>
 <div class="container-fluid">
   <div class="grid">
-    <div class="col-sm-6" style="background-color: #5076a0;border-radius: 5px;">
+    <div class="col-sm-6" >
       <h2> Elenco Notizie</h2>
       <!--  inserire qua il inputs  -->
       <div class="list-group">
         <?php
         $text = "";
-        //  qui viene preparata la list group relativa alle notizie
-        foreach ($news as $n)
-        {
-          // preparazione tooltip
-          $tooltip = "data-bs-toggle='tooltip' data-bs-placement='right' data-bs-title='seleziona'";
-
-          //  assegnazione stato active al button attivo
-          $selected = "\"";
-          ($n['id'] == $new_id)?$selected = "active\" aria-current=\"true\"" : $selected = "\"";
-
-          $text .= '<button type="button" name="' . $n['id'] . '" class="list-group-item list-group-item-action ' . $selected . ' onclick="listClick($(this));"' . PHP_EOL;
-          $text .= $tooltip . '>' .PHP_EOL;
-          $text .= $n['titolo'] . '</button>' . PHP_EOL;
-
-        }
-        //exit(var_dump($news));
+        //  valore id della notizia di default
+        $new_id = 1;
+        //  eventuale valore id ricevuto con il $_GET 
+        if (isset($_GET["id"])){
+          $new_id = $_GET["id"];
+        };
+        // viene invocata la classe che crea la list group
+        $layout = new bootLayout();
+        $text = $layout->listGroup($news, $new_id);
         echo ($text);
         ?>
         

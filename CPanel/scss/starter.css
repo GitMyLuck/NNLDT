@@ -12475,4 +12475,9 @@ body {
 
 .bg-dark {
   background-color: #304b87 !important;
+}
+
+.col-sm-6 {
+  background-color: #5076a0;
+  border-radius: 5px;
 }/*# sourceMappingURL=starter.css.map */

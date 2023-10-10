@@ -27,7 +27,7 @@
     <script type="text/javascript"> 
 			$(document).ready(function()
       {
-          // tooltip
+          // attiva tooltips
           $('[data-bs-toggle="tooltip"]').tooltip();
       });
     </script>

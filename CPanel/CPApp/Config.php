@@ -10,7 +10,6 @@ class Config {
 
     const HOME_PAGE = "ControlPanel Home";
     const GENERAL_PAGE = "ControlPanel General";
-    //const MAIN_PAGE = "ControlPanel Home";
 
 
 }
