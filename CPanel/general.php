@@ -15,18 +15,19 @@ echo PHP_EOL . "<body>" . PHP_EOL;
 use CPApp\CPSQLiteConnection;
 $conn = new CPSQLiteConnection();
 
-//  Preleva Array "news"   es Titolo = $news['titolo']
+//  Preleva Array "news"   {es Titolo = $news['titolo']}
 $news = array();
 $query = "SELECT * FROM news";
 $news = $conn->myCPQuery($query);
 
 // Distruggi connessione
 $conn = null;
+
 ?>
 <div class="container-fluid">
   <div class="grid">
     <div class="col-sm-6" style="background-color: #5076a0;border-radius: 5px;">
-      <h2>Elenco Notizie</h2>
+      <h2> Elenco Notizie</h2>
       <!--  inserire qua il inputs  -->
       <div class="list-group">
         <?php
@@ -34,20 +35,22 @@ $conn = null;
         //  qui viene preparata la list group relativa alle notizie
         foreach ($news as $n)
         {
+          // preparazione tooltip
+          $tooltip = "data-bs-toggle='tooltip' data-bs-placement='right' data-bs-title='seleziona'";
+
+          //  assegnazione stato active al button attivo
           $selected = "\"";
           ($n['id'] == $new_id)?$selected = "active\" aria-current=\"true\"" : $selected = "\"";
-          $text .= '<button type="button" name="' . $n['id'] . '" class="list-group-item list-group-item-action ' . $selected . ' onclick="listClick(' . $n['id'] . ');">' . PHP_EOL;
+
+          $text .= '<button type="button" name="' . $n['id'] . '" class="list-group-item list-group-item-action ' . $selected . ' onclick="listClick($(this));"' . PHP_EOL;
+          $text .= $tooltip . '>' .PHP_EOL;
           $text .= $n['titolo'] . '</button>' . PHP_EOL;
 
         }
         //exit(var_dump($news));
         echo ($text);
         ?>
-        <!--<button type="button" class="list-group-item list-group-item-action active">
-          Button selezionato
-        </button>-->
-      
-        <!--<button type="button" class="list-group-item list-group-item-action" disabled>A disabled button item</button>-->
+        
       </div>
     </div>
 

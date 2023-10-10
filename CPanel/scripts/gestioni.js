@@ -1,6 +1,10 @@
 
-
-function listClick(id)
+function listClick(listButton)
 {
-    alert("ci siamo!");
+    // General->list-group(elenco notizie)
+    // prelevo id della notizia selezionata
+    var id = $(listButton).attr("name");
+
+
+    alert(id);
 }
