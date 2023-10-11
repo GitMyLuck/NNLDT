@@ -3,11 +3,28 @@
 include "views/head.php";
 include "CPApp/SQLiteConnection.php";
 include "php/bootstrap.layouts.php";
+include "php/funct.class.php";
 use CPApp\Config;
 
 echo PHP_EOL . "<title>" . Config::GENERAL_PAGE . "</title>" . PHP_EOL;
 echo "</head>";
 echo PHP_EOL . "<body>" . PHP_EOL;
+
+//  valore id della notizia di default
+$new_id = 1;
+//  eventuale valore id ricevuto con il $_GET 
+if (isset($_GET["id"])){
+  $new_id = $_GET["id"];
+};
+// valore search di default
+$search = "";
+
+//  eventuale valore ricerca passato con il $_GET
+if (isset($_GET["search-news"])){
+  // sanitizzo comunque il dato inserito nel form SEARCH
+  $san_search = new Services();
+  $search = $san_search->validate($_GET["search-news"]);
+};
 
 //  Apri la connessione con il DB
 use CPApp\CPSQLiteConnection;
@@ -15,7 +32,7 @@ $conn = new CPSQLiteConnection();
 
 //  Preleva Array "news"   {es Titolo = $news['titolo']}
 $news = array();
-$query = "SELECT * FROM news";
+$query = "SELECT * FROM news WHERE titolo LIKE '%" . $search . "%';";
 $news = $conn->myCPQuery($query);
 
 // Distruggi connessione
@@ -26,23 +43,17 @@ $conn = null;
 <div class="container-fluid">
   <div class="grid">
     <div class="col-sm-6" >
-      <!--  inserire qua il inputs  -->
       <div class="list-group">
         <?php
         $text = "";
-        //  valore id della notizia di default
-        $new_id = 1;
-        //  eventuale valore id ricevuto con il $_GET 
-        if (isset($_GET["id"])){
-          $new_id = $_GET["id"];
-        };
+        
         // viene invocata la classe che crea la list group
         $layout = new bootLayout();
-        $text = $layout->listGroup($news, $new_id);
+        $text = $layout->listGroup($news, $new_id, $search);
         echo ($text);
         ?>
         
-      </div>
+      </div><!-- fine elenco notizie -->
     </div>
 
     <p></p>
