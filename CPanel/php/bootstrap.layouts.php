@@ -10,11 +10,15 @@ class bootLayout
         $text = '<div class="accordion" id="accordionList">
         <div class="accordion-item">
           <h2 class="accordion-header">
-
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseList"
-              aria-expanded="true" aria-controls="collapse1">
-              Elenco News
-            </button>
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseList"
+            aria-expanded="true" aria-controls="collapse1">
+            Elenco News
+          </button>
+          <form class="d-flex" role="search" style="padding: 5px;">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-primary" type="submit">Search</button>
+          </form>
+  
           </h2>
           <div id="collapseList" class="accordion-collapse" data-bs-parent="#accordionList">
             <div class="accordion-body">' . PHP_EOL;
