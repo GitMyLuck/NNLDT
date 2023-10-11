@@ -7,7 +7,18 @@ class bootLayout
     //Methods
     public function listGroup($list, $new_id)
     {
-        $text = "";
+        $text = '<div class="accordion" id="accordionList">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseList"
+              aria-expanded="true" aria-controls="collapse1">
+              Elenco News
+            </button>
+          </h2>
+          <div id="collapseList" class="accordion-collapse" data-bs-parent="#accordionList">
+            <div class="accordion-body">' . PHP_EOL;
+
         foreach ($list as $n)
         {
           // preparazione tooltip
@@ -21,6 +32,11 @@ class bootLayout
           $text .= $tooltip . '>' .PHP_EOL;
           $text .= $n['titolo'] . '</button>' . PHP_EOL;
         }
+
+        $text .= '</div>
+        </div>
+      </div> <!-- fine  Accordion-item  -->
+    </div> <!-- fine  accordion1  -->';
 
         return $text;
     }

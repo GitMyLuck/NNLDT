@@ -2,7 +2,7 @@
 
 include "views/head.php";
 include "CPApp/SQLiteConnection.php";
-include "php/bootstrap.layout.php";
+include "php/bootstrap.layouts.php";
 use CPApp\Config;
 
 echo PHP_EOL . "<title>" . Config::GENERAL_PAGE . "</title>" . PHP_EOL;
@@ -26,7 +26,6 @@ $conn = null;
 <div class="container-fluid">
   <div class="grid">
     <div class="col-sm-6" >
-      <h2> Elenco Notizie</h2>
       <!--  inserire qua il inputs  -->
       <div class="list-group">
         <?php
