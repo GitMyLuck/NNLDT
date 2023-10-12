@@ -30,10 +30,22 @@ if (isset($_GET["search-news"])){
 use CPApp\CPSQLiteConnection;
 $conn = new CPSQLiteConnection();
 
-//  Preleva Array "news"   {es Titolo = $news['titolo']}
+//  Preleva Array "news" TUTTE LE NOTIZIE PER COMPILARE ELENCO
 $news = array();
 $query = "SELECT * FROM news WHERE titolo LIKE '%" . $search . "%';";
 $news = $conn->myCPQuery($query);
+
+
+//  Preleva la notizia indicata dall' $_GET
+$new = array();
+if ( $new_id == 1){
+  // estrai la notizia con "id" più basso (valore di default)
+  $query = "SELECT * FROM news ORDER BY 'id' LIMIT 1";
+}else{
+  // estrai la notizia con "id" passato con $_GET
+    $query = "SELECT * FROM news WHERE id = " . $new_id . ";";
+}
+$new = $conn->myCPQuery($query);
 
 // Distruggi connessione
 $conn = null;
@@ -42,6 +54,7 @@ $conn = null;
 ?>
 <div class="container-fluid">
   <div class="grid">
+  <div class="row">
     <div class="col-sm-6" >
       <div class="list-group">
         <?php
@@ -55,8 +68,11 @@ $conn = null;
         
       </div><!-- fine elenco notizie -->
     </div>
-
+    <div class="col-sm-5" >
+      <h1><?php echo ($new[0]["titolo"]);?></h1>
+    </div>
     <p></p>
+  </div>
     <div class="row">
       <div class="col-sm-4">
         <div class="accordion" id="accordion1">
