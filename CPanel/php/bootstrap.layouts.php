@@ -26,7 +26,8 @@ class bootLayout
         foreach ($list as $n)
         {
           // preparazione tooltip
-          $tooltip = "data-bs-toggle='tooltip' data-bs-title='seleziona'";
+          //$tooltip = "data-bs-toggle='tooltip' data-bs-title='seleziona'";
+          $tooltip = "";
           
           //  assegnazione stato active al button attivo
           $selected = "\"";
@@ -34,7 +35,7 @@ class bootLayout
           //  se il valore di $new_id = 1 cioè "DEFAULT" al primo giro assegna la prop SELECTED
           //  alla prima voce, oppure se il valore di $new_id é assegnato metti la voce corrispondente
           //  su selezionato
-          (($n['id'] == $new_id) || ($new_id == 1 && $counter == 1))?$selected = "active\" aria-current=\"true\"" : $selected = "\"";
+          (($n['id'] == $new_id) || ($new_id == 0 && $counter == 1))?$selected = "active\" aria-current=\"true\"" : $selected = "\"";
 
           // prepariamo il titolo
           $titolo = $this->searchEvident($n['titolo'], $search);

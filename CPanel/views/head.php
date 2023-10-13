@@ -28,7 +28,7 @@
 			$(document).ready(function()
       {
           // attiva tooltips
-          $('[data-bs-toggle="tooltip"]').tooltip();
+          //$('[data-bs-toggle="tooltip"]').tooltip();
       });
     </script>
 
