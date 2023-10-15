@@ -45,8 +45,22 @@ if ( $new_id == 0){
   // estrai la notizia con "id" passato con $_GET
     $query = "SELECT * FROM news WHERE id = " . $new_id . ";";
 }
+/// QUESTA E' LA NOTIZIA PRINCIPALE
 $new = $conn->myCPQuery($query);
 
+// creo elenco colonne
+$headers = array();
+$columns = array();
+$c = 0;
+// creare foreach che riassegna i membri di $new ad un array normale
+foreach ($new[0] as $key => $value) {
+  if ( $key != "id" ) {
+        $columns[$key] = $value;
+        $headers[$c] = $key;
+        $c++;
+  };
+};
+$num_cols = $c;
 // Distruggi connessione
 $conn = null;
 
@@ -68,12 +82,17 @@ $conn = null;
         
       </div><!-- fine elenco notizie -->
     </div>
+
     <div class="col-sm-5" >
       <h1><?php echo ($new[0]["titolo"]);?></h1>
     </div>
     <p></p>
-  </div>
-    
+  </div> <!-- fine riga iniziale -->
+  <?php
+        // sezione che crea le supercelle per poter variare, creare notizie
+        $num = $layout->creaSuperCelle($num_cols, $columns, $headers);
+        echo ($num);
+  ?>
 
 
       
