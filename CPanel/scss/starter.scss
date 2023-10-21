@@ -61,3 +61,20 @@ body {
   font-size: 1.1rem;
 }
 
+/*  Classi SuperCelle   */
+.special-button {
+  max-height: 2.1rem;
+  padding-top: 0.2rem;
+  background-color: #2E4B55;
+}
+
+.special-date {
+  min-height: 2.0rem;
+  background-color: rgb(46, 75, 85);
+  border-radius: 5px;
+}
+
+.special-date:hover {
+  cursor: pointer;
+}
+

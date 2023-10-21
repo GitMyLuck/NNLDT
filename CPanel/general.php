@@ -48,14 +48,17 @@ if ( $new_id == 0){
 /// QUESTA E' LA NOTIZIA PRINCIPALE
 $new = $conn->myCPQuery($query);
 
-// creo elenco colonne
+// creo elenco colonne notizia con relativi valori
+// colonne
 $headers = array();
-$columns = array();
+// notizia
+$n = array();
+// numero di colonne
 $c = 0;
-// creare foreach che riassegna i membri di $new ad un array normale
+
 foreach ($new[0] as $key => $value) {
   if ( $key != "id" ) {
-        $columns[$key] = $value;
+        $n[$key] = $value;
         $headers[$c] = $key;
         $c++;
   };
@@ -89,12 +92,76 @@ $conn = null;
     <p></p>
   </div> <!-- fine riga iniziale -->
   <?php
-        // sezione che crea le supercelle per poter variare, creare notizie
-        $num = $layout->creaSuperCelle($num_cols, $columns, $headers);
-        echo ($num);
+        // sezione che crea le SuperCelle per poter variare, creare notizie
+        $super_celle = $layout->creaSuperCelle($num_cols, $n, $headers);
+        echo ($super_celle);
   ?>
+  <div class="row">
+<p>&nbsp;</p><p>&nbsp;</p>
+<hr>
+<div class="col-sm-4">
+  <div class="accordion" id="accordion158">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse158"
+          aria-expanded="false" aria-controls="collapse158">
+          Data
+        </button>
+      </h2>
+      <div id="collapse158" class="accordion-collapse collapse" data-bs-parent="#accordion158">
+        <div class="accordion-body">
+        <form action="general.php" method="POST">
+        <div class="row">
+          <div>Qui vanno inserite le eventuali istruzioni.</div>
+        </div>
+        <hr>
+        <div class="row">
+        <label class="active" for="dateStandard">Data</label>
+        <input type="date" class="special-date" id="dateStandard" name="data">
+        </div>
+        <hr>
+        <div class="row">
+        <div class="col-sm-4">
+        <button type="send" class="btn btn-primary special-button" id="sendButton" >invia</button>
+        </div>
+        <div class="col-sm-4">
+        <button type="send" class="btn btn-primary special-button" id="sendButton" >invia</button>
+        </div>
+        <div class="col-sm-4">
+        <button type="send" class="btn btn-primary special-button" id="sendButton" >invia</button>
+        </div>
+        </div>
+        </form>
+        </div>
+      </div>
+    </div> <!-- fine  Accordion-item  -->
+  </div> <!-- fine  accordion1  -->
+</div> <!-- fine  colonna -->
 
-
-      
+</div> <!--  fine class="row" -->
+<p>&nbsp;</p><p>&nbsp;</p> 
+<p>&nbsp;</p><p>&nbsp;</p>
+<p>&nbsp;</p><p>&nbsp;</p>
       
   </div> <!-- fine  Container  -->
+
+  <?php
+  if(isset($_POST["data"])) {  
+        
+        $data = "";
+        (isset($_POST["data"]))?$data = $_POST["data"] : $data = "2023/05/17";
+        $new_data = strtotime($data);
+        
+      
+        $conn = new CPSQLiteConnection();
+
+        //  UPDATE DATA 
+        $query = "UPDATE news SET data = \"" . $new_data . "\" WHERE id = 5";
+        $n = $conn->myCPQuery($query);
+        // Distruggi connessione
+        $conn = null;
+
+
+    }
+
+?>

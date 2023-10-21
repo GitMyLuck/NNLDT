@@ -73,7 +73,7 @@ class bootLayout
 					
 					}
 
-    public function creaSuperCelle($cols, $columns, $headers)
+    public function creaSuperCelle($cols, $new, $headers)
     {
       // $cols = numero delle colonne della tabella
       // $columns = array $colonna => valore
@@ -84,7 +84,7 @@ class bootLayout
 
       //  numero di SuperCelle ($cols)
       //  elenco completo chiavi->valori delle SuperCelle
-      //  per la notizia corrente  ($columns)
+      //  per la notizia corrente  ($new)
 
       //  divido il totale SuperCelle per 3 (Tante sono le SuperCelle di una row)
       $rows = floor($cols / 3);
@@ -112,7 +112,7 @@ class bootLayout
                 $text .= Config::TAB5 . '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $counter . '"
                 aria-expanded="false" aria-controls="collapse' . $counter . '">' . PHP_EOL;
                 // nome della SuperCella = nome colonna
-                $text .= Config::TAB5 . $headers[$counter] . PHP_EOL;
+                $text .= Config::TAB5 . ucfirst($headers[$counter]) . PHP_EOL;
                 // chiusura button intestazione
                 $text .= Config::TAB5 . '</button>' . PHP_EOL;
                 // chiusura intestazione accordion
@@ -124,6 +124,22 @@ class bootLayout
 
                 // qui andra' inserito per ogni SuperCella input del relativo 
                 // dato da visualizzare, variare, cancellare
+                // dato diverso per tipo diverso
+                switch ($headers[$counter])  {
+                          // in base al tipo usa una diversa function per la costruzione
+                          case "data":
+                            // tipo di dato data
+                            $header = $headers[$counter];
+                            $n = $new[$header];
+                            $text .= Config::TAB6;
+                            $text .= $this->SuperCellaData("read", $header, $n);
+                          break;
+                          default :
+                            // default running code here
+                            $text .= Config::TAB6 . '<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>' . PHP_EOL;
+
+                }
+
 
                 // chiusura del corpo accordion
                 $text .= Config::TAB5 . '</div><!-- fine accordion-body -->' . PHP_EOL;
@@ -143,6 +159,43 @@ class bootLayout
       return $text;
 
     }
+
+    //       data     
+    public function SuperCellaData($stato, $key, $value) {
+        // qui viene trasformato da timestamp a data normale il valore della data
+        $date = date('Y-m-d', $value);
+        // viene selezionata la stringa "disabled" a seconda del valore di stato
+        // passato   "read" o "write"
+        $disabled = "";
+        ($stato == "read")? $disabled = "disabled" : $disabled;
+
+        $newT = "";
+          $newT = <<<EOT
+
+
+          <form action="general.php" method="POST">
+                  <div class="row">
+                    <div>Data della notizia.</div>
+                  </div>
+              <hr>
+                  <div class="row">
+                    <label class="active" for="Standard$key">$key</label>
+                    <input type="date" class="special-date" id="Standard$key" name="$key" value="$date" $disabled>
+                  </div>
+              <hr>
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <p>&nbsp;</p>
+                    </div>
+                    <div class="col-sm-4">
+                      <button type="send" class="btn btn-primary special-button" id="sendButton" $disabled >invia</button>
+                    </div>
+                  </div>
+          </form>
+EOT;
+        $newT .= PHP_EOL;
+        return $newT;
+      }
 } // end of class
 
 ?>
