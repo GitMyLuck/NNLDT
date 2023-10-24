@@ -15,7 +15,7 @@ class bootLayout
             Elenco News
           </button>
           <form class="d-flex" role="search" style="padding: 5px;">
-              <input name="search-news" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <input name="search" class="form-control me-2" type="search" placeholder="cerca" aria-label="Search">
               <button class="btn btn-primary" type="submit">cerca</button>
           </form>
   
@@ -73,12 +73,25 @@ class bootLayout
 					
 					}
 
-    public function creaSuperCelle($cols, $new, $headers)
+    public function disableState($stato)  {
+        // viene selezionata la stringa "disabled" a seconda del valore di stato
+        // passato   "read" o "write"
+        $disabled = "";
+        ($stato == "read" || $stato == "")? $disabled = "disabled" : $disabled;
+        ($stato == "write" || $stato == "new")? $disabled = "" : $disabled;
+
+        // la stringa viene restituita
+        return $disabled;
+
+    }
+    public function creaSuperCelle($cols, $new, $headers, $state)
     {
       // $cols = numero delle colonne della tabella
       // $columns = array $colonna => valore
-      // $headers = colonne (nomi)
+      // $headers = intestazione colonne (fornisce i nomi delle supercelle)
+      // $state = indica lo stato per costruire la pagina
 
+      
       //  contatore generale delle SuperCelle
       $counter = 0;
 
@@ -99,9 +112,23 @@ class bootLayout
           $text .= '<div class="row">' . PHP_EOL;
             // all'interno inserisco le tre colonne che conterranno le SuperCelle
             for( $c = 1; $c <= 3; $c ++)  {
-               if ( $counter < $cols) {
+              if ( $counter < $cols) {
+              // preparo eccezzione form testo
+              $largTesto = "4";
+              $campo = $headers[$counter];
+              if ( ($c == 1 && $campo == "testo") || ($c == 2 && $campo == "testo"))
+                  {
+                    $largTesto = "8";
+                    $c++;
+                  }
+              else if( ($c == 3 && $campo == "testo") )
+                  {
+                    $largTesto = "12";
+                    $c=0;
+                    $r++;                    
+                  }
                 // apertura riga
-                $text .= Config::TAB1 . '<div class="col-sm-4">'  . PHP_EOL;
+                $text .= Config::TAB1 . '<div class="col-sm-' . $largTesto . '">'  . PHP_EOL;
                 // accordion
                 $text .= Config::TAB2 .'<div class="accordion" id="accordion'  . $counter . '">' . PHP_EOL;
                 // contenitore accordion
@@ -112,7 +139,7 @@ class bootLayout
                 $text .= Config::TAB5 . '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $counter . '"
                 aria-expanded="false" aria-controls="collapse' . $counter . '">' . PHP_EOL;
                 // nome della SuperCella = nome colonna
-                $text .= Config::TAB5 . ucfirst($headers[$counter]) . PHP_EOL;
+                $text .= Config::TAB5 . ucfirst($campo) . PHP_EOL;
                 // chiusura button intestazione
                 $text .= Config::TAB5 . '</button>' . PHP_EOL;
                 // chiusura intestazione accordion
@@ -122,6 +149,14 @@ class bootLayout
                 //  corpo vero e proprio
                 $text .= Config::TAB5 . '<div class="accordion-body">' . PHP_EOL;
 
+                // si preparano i parametri per chiamare la funzione di costruzione
+                // della SuperCella
+                $n = null;
+                // caso read - write - default
+                if ($state == "read" || $state == "write" || $state == "")  {
+                  $header = $headers[$counter];
+                  $n = $new[$header];
+                }
                 // qui andra' inserito per ogni SuperCella input del relativo 
                 // dato da visualizzare, variare, cancellare
                 // dato diverso per tipo diverso
@@ -129,10 +164,16 @@ class bootLayout
                           // in base al tipo usa una diversa function per la costruzione
                           case "data":
                             // tipo di dato data
-                            $header = $headers[$counter];
-                            $n = $new[$header];
+                            $header = "data";
+                            
                             $text .= Config::TAB6;
-                            $text .= $this->SuperCellaData("read", $header, $n);
+                            $text .= $this->SuperCellaData($state, $header, $n);
+                          break;
+                          case "testo":
+                            $header = "testo";
+                            
+                            $text .= Config::TAB6;
+                            $text .= $this->SuperCellaTesto($state, $header, $n);
                           break;
                           default :
                             // default running code here
@@ -152,30 +193,31 @@ class bootLayout
                 $text .= Config::TAB1  . '</div> <!-- fine  colonna -->'  . PHP_EOL;
                 // incremento contatore
                 $counter++;
-               }
+               } // end if conteggio headers
             }
           $text .= '</div> <!--  fine class="row" -->' . PHP_EOL;
       }
       return $text;
+      
 
     }
 
     //       data     
     public function SuperCellaData($stato, $key, $value) {
-        // qui viene trasformato da timestamp a data normale il valore della data
-        $date = date('Y-m-d', $value);
-        // viene selezionata la stringa "disabled" a seconda del valore di stato
-        // passato   "read" o "write"
-        $disabled = "";
-        ($stato == "read")? $disabled = "disabled" : $disabled;
+        // per stato "new" $value = today
+        ($value == null || $value == "")?$date = date('Y-m-d', time()):$date = date('Y-m-d', $value);
+       
+        $disabled = $this->disableState($stato);
 
+        // stringa istruzioni
+        $istruzioni = "Data della notizia.";
         $newT = "";
           $newT = <<<EOT
 
 
           <form action="general.php" method="POST">
                   <div class="row">
-                    <div>Data della notizia.</div>
+                    <div class="instructions">$istruzioni</div>
                   </div>
               <hr>
                   <div class="row">
@@ -195,7 +237,40 @@ class bootLayout
 EOT;
         $newT .= PHP_EOL;
         return $newT;
+      }// end of creaSuperCellaData
+
+public function SuperCellaTesto($stato, $key, $value)   {
+        $newT = "";
+        $istruzioni = "Qui di seguito va inserito il testo della notizia...";
+        $disabled = $this->disableState($stato);
+        $newT = <<<EOT
+
+        <form action="general.php" method="POST">
+			<div class="row">
+				<div class="instructions">$istruzioni.</div>
+			</div>
+        <hr>
+			<div class="row">
+				<textarea class="form-control" name="$key" aria-label="inserisci testo" $disabled >$value</textarea>
+			</div>
+        <hr>
+			<div class="row">
+					<div class="col-sm-4">
+					<p>&nbsp;</p>
+					</div>
+					<div class="col-sm-4">
+					<p>&nbsp;</p>
+					</div>
+					<div class="col-sm-4">
+					<button type="send" class="btn btn-primary special-button" id="sendButton" $disabled>invia</button>
+					</div>
+			</div>
+        </form>
+EOT;
+
+        return $newT;
       }
+
 } // end of class
 
 ?>

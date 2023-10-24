@@ -10,6 +10,20 @@ echo PHP_EOL . "<title>" . Config::GENERAL_PAGE . "</title>" . PHP_EOL;
 echo "</head>";
 echo PHP_EOL . "<body>" . PHP_EOL;
 
+//  pagina general parametri $_GET
+//  @param $_GET["id"]        $new_id     id della notizia che vogliamo mostrare
+//  @param $_GET["search"]    $search     stringa di ricerca fra i titoli delle notizie
+//  @param $_GET["state"]     $state      stato con cui viene preparata la pagina
+//                                        "read" o "" stato sola lettura valore di default
+//                                        "write" stato di variazione lettura scrittura
+//                                        "new" stato di aggiunta record
+
+//  valore di stato di default
+$state = "";
+//  preleva dalla stringa $_GET il valore dello stato ( se passato )
+if (isset($_GET["state"])){
+  $state = $_GET["state"];
+};
 //  valore id della notizia di default
 $new_id = 0;
 //  eventuale valore id ricevuto con il $_GET 
@@ -20,10 +34,10 @@ if (isset($_GET["id"])){
 $search = "";
 
 //  eventuale valore ricerca passato con il $_GET
-if (isset($_GET["search-news"])){
+if (isset($_GET["search"])){
   // sanitizzo comunque il dato inserito nel form SEARCH
   $san_search = new Services();
-  $search = $san_search->validate($_GET["search-news"]);
+  $search = $san_search->validate($_GET["search"]);
 };
 
 //  Apri la connessione con il DB
@@ -44,6 +58,9 @@ if ( $new_id == 0){
 }else{
   // estrai la notizia con "id" passato con $_GET
     $query = "SELECT * FROM news WHERE id = " . $new_id . ";";
+
+
+
 }
 /// QUESTA E' LA NOTIZIA PRINCIPALE
 $new = $conn->myCPQuery($query);
@@ -63,6 +80,9 @@ foreach ($new[0] as $key => $value) {
         $c++;
   };
 };
+
+//  test array 
+//  $headers = array("data","data_evento","titolo","tags","sottotitolo","testo","link_1","firma");
 $num_cols = $c;
 // Distruggi connessione
 $conn = null;
@@ -88,44 +108,44 @@ $conn = null;
 
     <div class="col-sm-5" >
       <h1><?php echo ($new[0]["titolo"]);?></h1>
+      <h2><?php echo ($new[0]["sottotitolo"]);?></h2>
     </div>
     <p></p>
   </div> <!-- fine riga iniziale -->
   <?php
         // sezione che crea le SuperCelle per poter variare, creare notizie
-        $super_celle = $layout->creaSuperCelle($num_cols, $n, $headers);
+        $super_celle = $layout->creaSuperCelle($num_cols, $n, $headers, $state);
         echo ($super_celle);
   ?>
   <div class="row">
 <p>&nbsp;</p><p>&nbsp;</p>
 <hr>
-<div class="col-sm-4">
+<div class="col-sm-8">
   <div class="accordion" id="accordion158">
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse158"
           aria-expanded="false" aria-controls="collapse158">
-          Data
+          Testo
         </button>
       </h2>
       <div id="collapse158" class="accordion-collapse collapse" data-bs-parent="#accordion158">
         <div class="accordion-body">
-        <form action="general.php" method="POST">
+        <form action="general.php" method="GET">
         <div class="row">
           <div>Qui vanno inserite le eventuali istruzioni.</div>
         </div>
         <hr>
         <div class="row">
-        <label class="active" for="dateStandard">Data</label>
-        <input type="date" class="special-date" id="dateStandard" name="data">
+        <textarea class="form-control" name="testo" aria-label="inserisci testo"></textarea>
         </div>
         <hr>
         <div class="row">
         <div class="col-sm-4">
-        <button type="send" class="btn btn-primary special-button" id="sendButton" >invia</button>
+        <p>&nbsp;</p>
         </div>
         <div class="col-sm-4">
-        <button type="send" class="btn btn-primary special-button" id="sendButton" >invia</button>
+        <p>&nbsp;</p>
         </div>
         <div class="col-sm-4">
         <button type="send" class="btn btn-primary special-button" id="sendButton" >invia</button>
@@ -146,6 +166,7 @@ $conn = null;
   </div> <!-- fine  Container  -->
 
   <?php
+  //  data
   if(isset($_POST["data"])) {  
         
         $data = "";
@@ -160,8 +181,8 @@ $conn = null;
         $n = $conn->myCPQuery($query);
         // Distruggi connessione
         $conn = null;
-
-
     }
+
+  
 
 ?>
