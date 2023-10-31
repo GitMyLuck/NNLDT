@@ -113,9 +113,10 @@ class bootLayout
             // all'interno inserisco le tre colonne che conterranno le SuperCelle
             for( $c = 1; $c <= 3; $c ++)  {
               if ( $counter < $cols) {
-              // preparo eccezzione form testo
-              $largTesto = "4";
-              $campo = $headers[$counter];
+                $largTesto = "4";
+                $campo = $headers[$counter];
+
+                // preparo eccezione form testo
               if ( ($c == 1 && $campo == "testo") || ($c == 2 && $campo == "testo"))
                   {
                     $largTesto = "8";
@@ -127,6 +128,8 @@ class bootLayout
                     $c=0;
                     $r++;                    
                   }
+                // fine eccezione form testo
+
                 // apertura riga
                 $text .= Config::TAB1 . '<div class="col-sm-' . $largTesto . '">'  . PHP_EOL;
                 // accordion
@@ -136,7 +139,7 @@ class bootLayout
                 //  intestazione accordion con titolo
                 $text .= Config::TAB4 . '<h2 class="accordion-header">' . PHP_EOL;
                 //  button intestazione accordion
-                $text .= Config::TAB5 . '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $counter . '"
+                $text .= Config::TAB5 . '<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $counter . '"
                 aria-expanded="false" aria-controls="collapse' . $counter . '">' . PHP_EOL;
                 // nome della SuperCella = nome colonna
                 $text .= Config::TAB5 . ucfirst($campo) . PHP_EOL;
@@ -145,7 +148,7 @@ class bootLayout
                 // chiusura intestazione accordion
                 $text .= Config::TAB4 . '</h2><!-- fine Accordion Header -->' . PHP_EOL;
                 //  corpo dell'accordion
-                $text .= Config::TAB4 . '<div id="collapse' . $counter . '" class="accordion-collapse collapse" data-bs-parent="#accordion' . $counter . '">' . PHP_EOL;
+                $text .= Config::TAB4 . '<div id="collapse' . $counter . '" class="accordion-collapse show" data-bs-parent="#accordion' . $counter . '">' . PHP_EOL;
                 //  corpo vero e proprio
                 $text .= Config::TAB5 . '<div class="accordion-body">' . PHP_EOL;
 
@@ -209,17 +212,12 @@ class bootLayout
        
         $disabled = $this->disableState($stato);
 
-        // stringa istruzioni
-        $istruzioni = "Data della notizia.";
         $newT = "";
           $newT = <<<EOT
 
 
           <form action="general.php" method="POST">
-                  <div class="row">
-                    <div class="instructions">$istruzioni</div>
-                  </div>
-              <hr>
+                  
                   <div class="row">
                     <label class="active" for="Standard$key">$key</label>
                     <input type="date" class="special-date" id="Standard$key" name="$key" value="$date" $disabled>
@@ -230,7 +228,7 @@ class bootLayout
                       <p>&nbsp;</p>
                     </div>
                     <div class="col-sm-4">
-                      <button type="send" class="btn btn-primary special-button" id="sendButton" $disabled >invia</button>
+                      <button type="send" class="btn btn-primary special-button justify-content-md-end" id="sendButton" $disabled >invia</button>
                     </div>
                   </div>
           </form>
@@ -241,30 +239,26 @@ EOT;
 
 public function SuperCellaTesto($stato, $key, $value)   {
         $newT = "";
-        $istruzioni = "Qui di seguito va inserito il testo della notizia...";
+        
         $disabled = $this->disableState($stato);
         $newT = <<<EOT
 
         <form action="general.php" method="POST">
-			<div class="row">
-				<div class="instructions">$istruzioni.</div>
-			</div>
-        <hr>
-			<div class="row">
-				<textarea class="form-control" name="$key" aria-label="inserisci testo" $disabled >$value</textarea>
-			</div>
-        <hr>
-			<div class="row">
-					<div class="col-sm-4">
-					<p>&nbsp;</p>
-					</div>
-					<div class="col-sm-4">
-					<p>&nbsp;</p>
-					</div>
-					<div class="col-sm-4">
-					<button type="send" class="btn btn-primary special-button" id="sendButton" $disabled>invia</button>
-					</div>
-			</div>
+              <div class="row">
+                <textarea class="form-control" name="$key" aria-label="inserisci testo" $disabled >$value</textarea>
+              </div>
+            <hr>
+              <div class="row">
+                    <div class="col-sm-5">
+                        <p>&nbsp;</p>
+                    </div>
+                    <div class="col-sm-5">
+                        <p>&nbsp;</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="send" class="btn btn-primary special-button" id="sendButton" $disabled>invia</button>
+                    </div>
+              </div>
         </form>
 EOT;
 

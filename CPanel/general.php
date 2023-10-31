@@ -59,8 +59,6 @@ if ( $new_id == 0){
   // estrai la notizia con "id" passato con $_GET
     $query = "SELECT * FROM news WHERE id = " . $new_id . ";";
 
-
-
 }
 /// QUESTA E' LA NOTIZIA PRINCIPALE
 $new = $conn->myCPQuery($query);
@@ -112,59 +110,57 @@ $conn = null;
     </div>
     <p></p>
   </div> <!-- fine riga iniziale -->
+  <div class="row">
+  <div id="state-buttons" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+			  <input type="radio" class="btn-check" name="btnradio" id="read" autocomplete="off" checked 
+        onclick="selectState($(this), 'read');">
+			  <label class="btn btn-outline-primary" for="read">show</label>
+
+			  <input type="radio" class="btn-check" name="btnradio" id="write" autocomplete="off">
+			  <label class="btn btn-outline-primary" for="write" 
+        onclick="selectState($(this), 'write');">modify</label>
+
+			  <input type="radio" class="btn-check" name="btnradio" id="new" autocomplete="off">
+			  <label class="btn btn-outline-primary" for="new" 
+        onclick="selectState($(this), 'new');">new</label>
+	</div>
+  </div> <!-- fine riga tipo di azione -->
+  <p></p> <!-- spazio -->
+  <div class="row">
+
+
+  </div>  <!-- fine riga pulsantiera -->
+  <p></p> <!-- spazio -->
   <?php
         // sezione che crea le SuperCelle per poter variare, creare notizie
         $super_celle = $layout->creaSuperCelle($num_cols, $n, $headers, $state);
         echo ($super_celle);
   ?>
   <div class="row">
-<p>&nbsp;</p><p>&nbsp;</p>
-<hr>
-<div class="col-sm-8">
-  <div class="accordion" id="accordion158">
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse158"
-          aria-expanded="false" aria-controls="collapse158">
-          Testo
-        </button>
-      </h2>
-      <div id="collapse158" class="accordion-collapse collapse" data-bs-parent="#accordion158">
-        <div class="accordion-body">
-        <form action="general.php" method="GET">
-        <div class="row">
-          <div>Qui vanno inserite le eventuali istruzioni.</div>
-        </div>
-        <hr>
-        <div class="row">
-        <textarea class="form-control" name="testo" aria-label="inserisci testo"></textarea>
-        </div>
-        <hr>
-        <div class="row">
-        <div class="col-sm-4">
-        <p>&nbsp;</p>
-        </div>
-        <div class="col-sm-4">
-        <p>&nbsp;</p>
-        </div>
-        <div class="col-sm-4">
-        <button type="send" class="btn btn-primary special-button" id="sendButton" >invia</button>
-        </div>
-        </div>
-        </form>
-        </div>
-      </div>
-    </div> <!-- fine  Accordion-item  -->
-  </div> <!-- fine  accordion1  -->
-</div> <!-- fine  colonna -->
 
-</div> <!--  fine class="row" -->
+  </div> <!--  fine class="row" -->
 <p>&nbsp;</p><p>&nbsp;</p> 
 <p>&nbsp;</p><p>&nbsp;</p>
 <p>&nbsp;</p><p>&nbsp;</p>
       
   </div> <!-- fine  Container  -->
+  <script type="text/javascript"> 
+			$(document).ready(function(event)
+      {
+          // attiva tooltips
+          //$('[data-bs-toggle="tooltip"]').tooltip();
+          
+          var stato = "<?php echo($state); ?>";
+          $('#' + stato).attr("checked", "true");
+          var scroll = Math.floor($("#state-buttons").offset().top);
+          
+          $("html, body").animate({scrollTop: scroll}, 100);
+          
+          //  qui verranno implementati diversi comportamenti in base
+          //  allo [stato]
 
+      });
+    </script>
   <?php
   //  data
   if(isset($_POST["data"])) {  
