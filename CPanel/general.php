@@ -128,7 +128,7 @@ $conn = null;
   <p></p> <!-- spazio -->
   <div class="row">
   <button type="send" class="btn btn-primary special-button" id="sendButton" $disabled >
-  <i class="fa-solid fa-code"></i>
+  <i class="fa-solid fa-file fa-xl" style="float:left;"></i>
   </button>
 
   </div>  <!-- fine riga pulsantiera -->
