@@ -19,10 +19,12 @@
     <script src="scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="assets/js/color-modes.js" type="text/javascript"></script>
     <script src="scripts/gestioni.js" type="text/javascript"></script>
+    <script src="assets/js/all.min.js" type="text/javascript"></script>
 
     <!-- Custom styles for this template -->
     <link href="scss/starter.css" rel="stylesheet">
     <link href="css/sign-in.css" rel="stylesheet">
+    <link href="assets/css/all.min.css" rel="stylesheet">
 
     <script type="text/javascript"> 
 			$(document).ready(function()

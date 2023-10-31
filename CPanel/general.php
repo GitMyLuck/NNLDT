@@ -127,7 +127,9 @@ $conn = null;
   </div> <!-- fine riga tipo di azione -->
   <p></p> <!-- spazio -->
   <div class="row">
-
+  <button type="send" class="btn btn-primary special-button" id="sendButton" $disabled >
+  <i class="fa-solid fa-code"></i>
+  </button>
 
   </div>  <!-- fine riga pulsantiera -->
   <p></p> <!-- spazio -->
