@@ -33,11 +33,12 @@ if (isset($_GET["id"])){
 // valore search di default
 $search = "";
 
+// inizializzazione classe Services
+$services = new Services();
 //  eventuale valore ricerca passato con il $_GET
 if (isset($_GET["search"])){
   // sanitizzo comunque il dato inserito nel form SEARCH
-  $san_search = new Services();
-  $search = $san_search->validate($_GET["search"]);
+  $search = $services->validate($_GET["search"]);
 };
 
 //  Apri la connessione con il DB
@@ -112,25 +113,32 @@ $conn = null;
   </div> <!-- fine riga iniziale -->
   <div class="row">
   <div id="state-buttons" class="btn-group" role="group" aria-label="Basic radio toggle button group">
-			  <input type="radio" class="btn-check" name="btnradio" id="read" autocomplete="off" checked 
+			  <input type="radio" class="btn-check" name="btnstate" id="read" autocomplete="off" checked 
         onclick="selectState($(this), 'read');">
 			  <label class="btn btn-outline-primary" for="read">show</label>
 
-			  <input type="radio" class="btn-check" name="btnradio" id="write" autocomplete="off">
+			  <input type="radio" class="btn-check" name="btnstate" id="write" autocomplete="off">
 			  <label class="btn btn-outline-primary" for="write" 
         onclick="selectState($(this), 'write');">modify</label>
 
-			  <input type="radio" class="btn-check" name="btnradio" id="new" autocomplete="off">
+			  <input type="radio" class="btn-check" name="btnstate" id="new" autocomplete="off">
 			  <label class="btn btn-outline-primary" for="new" 
         onclick="selectState($(this), 'new');">new</label>
 	</div>
   </div> <!-- fine riga tipo di azione -->
   <p></p> <!-- spazio -->
   <div class="row">
-  <button type="send" class="btn btn-primary special-button" id="sendButton" $disabled >
-  <i class="fa-solid fa-file fa-xl" style="float:left;"></i>
-  </button>
-
+    <div id="action-buttons" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnaction" id="close" autocomplete="off" checked 
+        onclick="selectAction($(this), 'close');">
+        <label class="btn btn-outline-primary" for="close">close</label>
+        <input type="radio" class="btn-check" name="btnaction" id="open" autocomplete="off" 
+        onclick="selectAction($(this), 'open');">
+        <label class="btn btn-outline-primary" for="open">open</label>
+        <input type="radio" class="btn-check" name="btnaction" id="search" autocomplete="off"
+        onclick="selectAction($(this), 'search');">
+        <label class="btn btn-outline-primary" for="search">search</label>
+    </div>
   </div>  <!-- fine riga pulsantiera -->
   <p></p> <!-- spazio -->
   <?php

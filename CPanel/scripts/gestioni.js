@@ -25,3 +25,18 @@ function selectState(btn, state)
     location.href='general.php?id=' + id + "&state=" + st;
 
 }
+
+function selectAction(btn, action)
+{
+    var b = btn[0].id;
+    var ac = action; 
+    switch (ac) {
+        case "close":
+            // statements here
+            break;
+
+        default:
+
+
+    }
+}

@@ -17,6 +17,13 @@ class Services {
     return $data;
   }
 
-
+  // Metodo per inserire direttamente nella pagina html icona
+  public function icon($type, $size)
+  {
+    $html = '<i class="fa-solid ';
+    $html .= $type . ' ' . $size . '"';
+    $html .= '></i>&nbsp;';
+    return $html;
+  }
 }
 ?>
