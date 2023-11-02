@@ -12,7 +12,7 @@ class bootLayout
         <div class="accordion-item">
           <h2 class="accordion-header">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseList" aria-expanded="true" aria-controls="collapse1">
-            Elenco News
+            Elenco Notizie
           </button>
           <form class="d-flex" role="search" style="padding: 5px;">
               <input name="search" class="form-control me-2" type="search" placeholder="cerca" aria-label="Search">
@@ -40,9 +40,10 @@ class bootLayout
 
           // prepariamo il titolo
           $titolo = $this->searchEvident($n['titolo'], $search);
-          $text .= '<button type="button" name="' . $n['id'] . '" class="list-group-item list-group-item-action ' . $selected . ' onclick="listClick($(this));"' . PHP_EOL;
+          $indice = $n['indice'];
+          $text .= '<button type="button" id="' . $n['indice'] . '" name="' . $n['id'] . '" class="list-group-item list-group-item-action ' . $selected . ' onclick="listClick($(this));"' . PHP_EOL;
           $text .= $tooltip . '>' .PHP_EOL;
-          $text .= $titolo . '</button>' . PHP_EOL;
+          $text .= $indice . ' - ' . $titolo . '</button>' . PHP_EOL;
           $counter ++;
         }
 
@@ -53,6 +54,26 @@ class bootLayout
 
         return $text;
     }
+
+    //  Funzione che crea ed organizza i dati principali dela notizia
+    /**
+     * Summary of datiNews
+     * @param   string  $stato
+     * @param   array   $new
+     * @return  string  $html
+     */
+    public function datiNews($stato, $new, $indice)
+          {
+              $html = "";
+              // linea n° + titolo
+              $html .= "<h1>";
+              if ($stato != "new") {
+                $html .=  $indice . "  -  " . $new[1]["titolo"];
+              }
+              $html .= "</h1>";
+              
+              return $html;
+          }
 
 
     //  Funzione che cerca nella stringa passata come argomento

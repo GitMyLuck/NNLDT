@@ -30,6 +30,12 @@ $new_id = 0;
 if (isset($_GET["id"])){
   $new_id = $_GET["id"];
 };
+// valore indice
+$indice = 1;
+if (isset($_GET["indice"])){
+  $indice = $_GET["indice"];
+};
+
 // valore search di default
 $search = "";
 
@@ -72,8 +78,8 @@ $n = array();
 // numero di colonne
 $c = 0;
 
-foreach ($new[0] as $key => $value) {
-  if ( $key != "id" ) {
+foreach ($new[1] as $key => $value) {
+  if ( $key != "id" && $key != "indice" ) {
         $n[$key] = $value;
         $headers[$c] = $key;
         $c++;
@@ -105,13 +111,16 @@ $conn = null;
       </div><!-- fine elenco notizie -->
     </div>
 
-    <div class="col-sm-5" >
-      <h1><?php echo ($new[0]["titolo"]);?></h1>
-      <h2><?php echo ($new[0]["sottotitolo"]);?></h2>
+    <div class="col-sm-6" >
+      <!-- dati notizia -->
+      <?php $titolo = $layout->datiNews($state, $new, $indice); 
+            echo($titolo);  ?>
+      <h2><?php if ($state != "new" ) {echo ($new[1]["sottotitolo"]);}?></h2>
     </div>
     <p></p>
   </div> <!-- fine riga iniziale -->
   <div class="row">
+  
   <div id="state-buttons" class="btn-group" role="group" aria-label="Basic radio toggle button group">
 			  <input type="radio" class="btn-check" name="btnstate" id="read" autocomplete="off" checked 
         onclick="selectState($(this), 'read');">
@@ -124,11 +133,15 @@ $conn = null;
 			  <input type="radio" class="btn-check" name="btnstate" id="new" autocomplete="off">
 			  <label class="btn btn-outline-primary" for="new" 
         onclick="selectState($(this), 'new');">new</label>
-	</div>
+  </div>
   </div> <!-- fine riga tipo di azione -->
   <p></p> <!-- spazio -->
   <div class="row">
-    <div id="action-buttons" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+  <div class="col-sm-8" >
+  <h2><?php if ($state != "new" ) {echo ($new[1]["titolo"]);}?></h2>
+  </div>
+  <div class="col-sm-4" >
+    <div id="action-buttons" style="float:right;" class="btn-group" role="group" aria-label="Basic radio toggle button group">
         <input type="radio" class="btn-check" name="btnaction" id="close" autocomplete="off" checked 
         onclick="selectAction($(this), 'close');">
         <label class="btn btn-outline-primary" for="close">close</label>
@@ -137,8 +150,9 @@ $conn = null;
         <label class="btn btn-outline-primary" for="open">open</label>
         <input type="radio" class="btn-check" name="btnaction" id="search" autocomplete="off"
         onclick="selectAction($(this), 'search');">
-        <label class="btn btn-outline-primary" for="search">search</label>
+        <label class="btn btn-outline-primary" for="search"><?php echo($services->icon("fa-search", "fa-xl")); ?>search</label>
     </div>
+  </div>
   </div>  <!-- fine riga pulsantiera -->
   <p></p> <!-- spazio -->
   <?php
@@ -162,10 +176,18 @@ $conn = null;
           
           var stato = "<?php echo($state); ?>";
           $('#' + stato).attr("checked", "true");
+
+          // preleva il valore del parametro ['search']
+          // se esiste non provocare lo scroll
+          var par = (location.search.split('search=')[1]||'').split('&')[0];
+          var search = (location.search.split('search=')[1]);
+          
+          if (par == "" && search == undefined)  {
           var scroll = Math.floor($("#state-buttons").offset().top);
           
           $("html, body").animate({scrollTop: scroll}, 100);
-          
+          }
+
           //  qui verranno implementati diversi comportamenti in base
           //  allo [stato]
 

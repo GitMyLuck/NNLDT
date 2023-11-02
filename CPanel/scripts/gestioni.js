@@ -5,9 +5,10 @@ function listClick(listButton)
     // prelevo id della notizia selezionata
     var id = $(listButton).attr("name");
 
+    var indice =$(listButton).attr("id");
     // provoco il redirect alla pagina con il
     // numero di notizia indicato in $GET
-    location.href='general.php?id=' + id;
+    location.href='general.php?id=' + id + '&indice=' + indice;
 }
 
 function selectState(btn, state)
@@ -19,10 +20,12 @@ function selectState(btn, state)
     }
 
     var id = $(".active").attr("name");
+
+    var indice =$(".active").attr("id");
     // provoco il redirect alla pagina con il
     // numero di notizia indicato in $GET
     // e lo stato passato con $_GET  ("". "read", "write", "new")
-    location.href='general.php?id=' + id + "&state=" + st;
+    location.href='general.php?id=' + id + '&indice=' + indice + '&state=' + st;
 
 }
 
@@ -34,7 +37,9 @@ function selectAction(btn, action)
         case "close":
             // statements here
             break;
-
+        case "search":
+            $("html, body").animate({scrollTop: 0}, 100);
+            break;
         default:
 
 

@@ -35,11 +35,18 @@ class CPSQLiteConnection {
                 $row = array();
                 $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
                 try {
+                        $counter = 1;
                         $this->pdo  = new \PDO($dir, null, null, null);
                         foreach ($this->pdo->query($query, \PDO::FETCH_ASSOC) as $key=>$value)
                     {
-                        $row[$key] = $value;
+                        $row[$counter] = $value;
+                        // aggiungo il campo indice
+                        $a = array("indice" => strval($counter));
+                        $row[$counter] = $a + $row[$counter];
+                        
+                        $counter++;
                     }
+
                         $this->pdo = null;
                         return $row;
 
@@ -50,6 +57,30 @@ class CPSQLiteConnection {
                 }
                 
             }
+            public function myQuery($query = null)
+            {
+                $row = array();
+                $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
+                try {
+                        $counter = 1;
+                        $this->pdo  = new \PDO($dir, null, null, null);
+                        foreach ($this->pdo->query($query, \PDO::FETCH_ASSOC) as $key=>$value)
+                    {
+                        $row[$counter] = $value;
+                        $counter++;
+                    }
+
+                        $this->pdo = null;
+                        return $row;
+
+                }catch(\PDOException $e)    {
+                        $res = ("Connection failed: " . $e->message);
+                        $this->pdo = null;
+                        return $res;
+                }
+                
+            }
+    
     
 }
 ?>
