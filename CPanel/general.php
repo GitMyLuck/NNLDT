@@ -21,20 +21,23 @@ echo PHP_EOL . "<body>" . PHP_EOL;
 //  valore di stato di default
 $state = "";
 //  preleva dalla stringa $_GET il valore dello stato ( se passato )
-if (isset($_GET["state"])){
+if (isset($_GET["state"])) {
   $state = $_GET["state"];
-};
+}
+;
 //  valore id della notizia di default
 $new_id = 0;
 //  eventuale valore id ricevuto con il $_GET 
-if (isset($_GET["id"])){
+if (isset($_GET["id"])) {
   $new_id = $_GET["id"];
-};
+}
+;
 // valore indice
 $indice = 1;
-if (isset($_GET["indice"])){
+if (isset($_GET["indice"])) {
   $indice = $_GET["indice"];
-};
+}
+;
 
 // valore search di default
 $search = "";
@@ -42,29 +45,31 @@ $search = "";
 // inizializzazione classe Services
 $services = new Services();
 //  eventuale valore ricerca passato con il $_GET
-if (isset($_GET["search"])){
+if (isset($_GET["search"])) {
   // sanitizzo comunque il dato inserito nel form SEARCH
   $search = $services->validate($_GET["search"]);
-};
+}
+;
 
 //  Apri la connessione con il DB
 use CPApp\CPSQLiteConnection;
+
 $conn = new CPSQLiteConnection();
 
 //  Preleva Array "news" TUTTE LE NOTIZIE PER COMPILARE ELENCO
 $news = array();
-$query = "SELECT * FROM news WHERE titolo LIKE '%" . $search . "%';";
+$query = "SELECT * FROM " . Config::TNAME . " WHERE titolo LIKE '%" . $search . "%';";
 $news = $conn->myCPQuery($query);
 
 
 //  Preleva la notizia indicata dall' $_GET
 $new = array();
-if ( $new_id == 0){
+if ($new_id == 0) {
   // estrai la notizia con "id" più basso (valore di default)
-  $query = "SELECT * FROM news ORDER BY 'id' LIMIT 1";
-}else{
+  $query = "SELECT * FROM " . Config::TNAME . " ORDER BY 'id' LIMIT 1";
+} else {
   // estrai la notizia con "id" passato con $_GET
-    $query = "SELECT * FROM news WHERE id = " . $new_id . ";";
+  $query = "SELECT * FROM " . Config::TNAME . " WHERE id = " . $new_id . ";";
 
 }
 /// QUESTA E' LA NOTIZIA PRINCIPALE
@@ -79,15 +84,15 @@ $n = array();
 $c = 0;
 
 foreach ($new[1] as $key => $value) {
-  if ( $key != "id" && $key != "indice" ) {
-        $n[$key] = $value;
-        $headers[$c] = $key;
-        $c++;
-  };
-};
+  if ($key != "id" && $key != "indice") {
+    $n[$key] = $value;
+    $headers[$c] = $key;
+    $c++;
+  }
+  ;
+}
+;
 
-//  test array 
-//  $headers = array("data","data_evento","titolo","tags","sottotitolo","testo","link_1","firma");
 $num_cols = $c;
 // Distruggi connessione
 $conn = null;
@@ -96,121 +101,148 @@ $conn = null;
 ?>
 <div class="container-fluid">
   <div class="grid">
-  <div class="row">
-    <div class="col-sm-6" >
-      <div class="list-group">
-        <?php
-        $text = "";
-        
-        // viene invocata la classe che crea la list group
-        $layout = new bootLayout();
-        $text = $layout->listGroup($news, $new_id, $search);
-        echo ($text);
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="list-group">
+          <?php
+          $text = "";
+
+          // viene invocata la classe che crea la list group
+          $layout = new bootLayout();
+          $text = $layout->listGroup($news, $new_id, $search);
+          echo ($text);
+          ?>
+
+        </div><!-- fine elenco notizie -->
+      </div>
+
+      <div class="col-sm-6">
+        <!-- dati notizia -->
+        <?php $titolo = $layout->datiNews($state, $new, $indice);
+        echo ($titolo);
         ?>
-        
-      </div><!-- fine elenco notizie -->
-    </div>
+      </div>
+      <p></p>
+    </div> <!-- fine riga iniziale -->
+    <div class="row">
 
-    <div class="col-sm-6" >
-      <!-- dati notizia -->
-      <?php $titolo = $layout->datiNews($state, $new, $indice); 
-            echo($titolo);  ?>
-      <h2><?php if ($state != "new" ) {echo ($new[1]["sottotitolo"]);}?></h2>
-    </div>
-    <p></p>
-  </div> <!-- fine riga iniziale -->
-  <div class="row">
-  
-  <div id="state-buttons" class="btn-group" role="group" aria-label="Basic radio toggle button group">
-			  <input type="radio" class="btn-check" name="btnstate" id="read" autocomplete="off" checked 
-        onclick="selectState($(this), 'read');">
-			  <label class="btn btn-outline-primary" for="read">show</label>
+      <div id="state-buttons" class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnstate" id="read" autocomplete="off" checked
+          onclick="selectState($(this), 'read');">
+        <label class="btn btn-outline-primary" for="read">
+          <?php echo ($services->icon("fa-eye", "fa-xl")); ?>show
+        </label>
 
-			  <input type="radio" class="btn-check" name="btnstate" id="write" autocomplete="off">
-			  <label class="btn btn-outline-primary" for="write" 
-        onclick="selectState($(this), 'write');">modify</label>
+        <input type="radio" class="btn-check" name="btnstate" id="write" autocomplete="off">
+        <label class="btn btn-outline-primary" for="write" onclick="selectState($(this), 'write');">
+          <?php echo ($services->icon("fa-pen", "fa-xl")); ?>modify
+        </label>
 
-			  <input type="radio" class="btn-check" name="btnstate" id="new" autocomplete="off">
-			  <label class="btn btn-outline-primary" for="new" 
-        onclick="selectState($(this), 'new');">new</label>
-  </div>
-  </div> <!-- fine riga tipo di azione -->
-  <p></p> <!-- spazio -->
-  <div class="row">
-  <div class="col-sm-8" >
-  <h2><?php if ($state != "new" ) {echo ($new[1]["titolo"]);}?></h2>
-  </div>
-  <div class="col-sm-4" >
-    <div id="action-buttons" style="float:right;" class="btn-group" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="btnaction" id="close" autocomplete="off" checked 
-        onclick="selectAction($(this), 'close');">
-        <label class="btn btn-outline-primary" for="close">close</label>
-        <input type="radio" class="btn-check" name="btnaction" id="open" autocomplete="off" 
-        onclick="selectAction($(this), 'open');">
-        <label class="btn btn-outline-primary" for="open">open</label>
-        <input type="radio" class="btn-check" name="btnaction" id="search" autocomplete="off"
-        onclick="selectAction($(this), 'search');">
-        <label class="btn btn-outline-primary" for="search"><?php echo($services->icon("fa-search", "fa-xl")); ?>search</label>
-    </div>
-  </div>
-  </div>  <!-- fine riga pulsantiera -->
-  <p></p> <!-- spazio -->
-  <?php
-        // sezione che crea le SuperCelle per poter variare, creare notizie
-        $super_celle = $layout->creaSuperCelle($num_cols, $n, $headers, $state);
-        echo ($super_celle);
-  ?>
-  <div class="row">
+        <input type="radio" class="btn-check" name="btnstate" id="new" autocomplete="off">
+        <label class="btn btn-outline-primary" for="new" onclick="selectState($(this), 'new');">
+          <?php echo ($services->icon("fa-file", "fa-xl")); ?>new
+        </label>
+      </div>
+    </div> <!-- fine riga tipo di azione -->
+    <p></p> <!-- spazio -->
+    <div class="row">
+      <div class="col-sm-8">
+        <h2>
+          <?php if ($state != "new") {
+            echo ($new[1]["titolo"]);
+          } ?>
+        </h2>
+      </div>
+      <div class="col-sm-4">
+        <div id="action-buttons" style="float:right;" class="btn-group" role="group"
+          aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="btnaction" id="close" autocomplete="off" checked
+            onclick="selectAction($(this), 'close');">
+          <label class="btn btn-outline-primary" for="close">
+            <?php echo ($services->icon("fa-down-left-and-up-right-to-center", "fa-xl")); ?>close
+          </label>
+          <input type="radio" class="btn-check" name="btnaction" id="open" autocomplete="off"
+            onclick="selectAction($(this), 'open');">
+          <label class="btn btn-outline-primary" for="open">
+            <?php echo ($services->icon("fa-up-right-and-down-left-from-center", "fa-xl")); ?>open
+          </label>
+          <input type="radio" class="btn-check" name="btnaction" id="search" autocomplete="off"
+            onclick="selectAction($(this), 'search');">
+          <label class="btn btn-outline-primary" for="search">
+            <?php echo ($services->icon("fa-search", "fa-xl")); ?>search
+          </label>
+        </div>
+      </div>
+    </div> <!-- fine riga pulsantiera -->
+    <p></p> <!-- spazio -->
+    <?php
+    // sezione che crea le SuperCelle per poter variare, creare notizie
+    $super_celle = $layout->creaSuperCelle($num_cols, $new[1], $headers, $state);
+    echo ($super_celle);
+    ?>
+    <div class="row">
 
-  </div> <!--  fine class="row" -->
-<p>&nbsp;</p><p>&nbsp;</p> 
-<p>&nbsp;</p><p>&nbsp;</p>
-<p>&nbsp;</p><p>&nbsp;</p>
-      
+    </div> <!--  fine class="row" -->
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
   </div> <!-- fine  Container  -->
-  <script type="text/javascript"> 
-			$(document).ready(function(event)
-      {
-          // attiva tooltips
-          //$('[data-bs-toggle="tooltip"]').tooltip();
-          
-          var stato = "<?php echo($state); ?>";
-          $('#' + stato).attr("checked", "true");
+  <script type="text/javascript">
+    $(document).ready(function (event) {
+      // attiva tooltips
+      //$('[data-bs-toggle="tooltip"]').tooltip();
 
-          // preleva il valore del parametro ['search']
-          // se esiste non provocare lo scroll
-          var par = (location.search.split('search=')[1]||'').split('&')[0];
-          var search = (location.search.split('search=')[1]);
-          
-          if (par == "" && search == undefined)  {
-          var scroll = Math.floor($("#state-buttons").offset().top);
-          
-          $("html, body").animate({scrollTop: scroll}, 100);
-          }
+      var stato = "<?php echo ($state); ?>";
+      $('#' + stato).attr("checked", "true");
 
-          //  qui verranno implementati diversi comportamenti in base
-          //  allo [stato]
+      // preleva il valore del parametro ['search']
+      // se esiste non provocare lo scroll
+      var par = (location.search.split('search=')[1] || '').split('&')[0];
+      var search = (location.search.split('search=')[1]);
 
-      });
-    </script>
+      if (par == "" && search == undefined) {
+        var scroll = Math.floor($("#state-buttons").offset().top);
+
+        $("html, body").animate({ scrollTop: scroll }, 100);
+      }
+
+      //  qui verranno implementati diversi comportamenti in base
+      //  allo [stato]
+
+    });
+  </script>
   <?php
-  //  data
-  if(isset($_POST["data"])) {  
-        
-        $data = "";
-        (isset($_POST["data"]))?$data = $_POST["data"] : $data = "2023/05/17";
-        $new_data = strtotime($data);
-        
-      
-        $conn = new CPSQLiteConnection();
 
-        //  UPDATE DATA 
-        $query = "UPDATE news SET data = \"" . $new_data . "\" WHERE id = 5";
-        $n = $conn->myCPQuery($query);
-        // Distruggi connessione
-        $conn = null;
+  $r = upload("data");
+  $r = upload("testo");
+  function upload($type)
+  {
+    
+    if (isset($_POST[$type]) && isset($_POST["id"])) {
+
+      $value = $_POST[$type];
+      $id = $_POST["id"];
+      // caso speciale "data"
+      if ($type === "data")   {
+      (isset($_POST["data"])) ? $data = $_POST["data"] : $data = "2023/05/17";
+      $new_data = strtotime($data);
+      $value = $new_data;
+      }
+
+      $conn = new CPSQLiteConnection();
+
+      //  UPDATE 
+      $n = $conn->myUpdate($type, $value, $id);
+      var_dump($n);
+      // Distruggi connessione
+      $conn = null;
+      return $conn;
     }
+  }
 
-  
 
-?>
+  ?>

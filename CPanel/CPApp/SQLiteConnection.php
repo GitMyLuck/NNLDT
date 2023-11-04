@@ -1,10 +1,12 @@
 <?php
 namespace CPApp;
+
 include "Config.php";
 /**
  * SQLite connnection
  */
-class CPSQLiteConnection {
+class CPSQLiteConnection
+{
     /**
      * PDO instance
      * var type 
@@ -15,72 +17,78 @@ class CPSQLiteConnection {
      * return in instance of the PDO object that connects to the SQLite database
      * @return \PDO
      */
-        public function connect() {
-            $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
-            
-            try {
-                    $this->pdo  = new \PDO($dir, null, null, null);
-                    return $this->pdo;
-            }catch(\PDOException $e)    {
-                    $res = ("Connection failed: " . $e->message);
-                    return $this->pdo;
-            }
+    public function connect()
+    {
+        $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
 
+        try {
+            $this->pdo = new \PDO($dir, null, null, null);
+            return $this->pdo;
+        } catch (\PDOException $e) {
+            $res = ("Connection failed: " . $e->message);
+            return $this->pdo;
         }
 
-           
-            //  funzione invocata dal ControlPanel (per motivi di indirizzo relativo)
-            public function myCPQuery($query = null)
-            {
-                $row = array();
-                $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
-                try {
-                        $counter = 1;
-                        $this->pdo  = new \PDO($dir, null, null, null);
-                        foreach ($this->pdo->query($query, \PDO::FETCH_ASSOC) as $key=>$value)
-                    {
-                        $row[$counter] = $value;
-                        // aggiungo il campo indice
-                        $a = array("indice" => strval($counter));
-                        $row[$counter] = $a + $row[$counter];
-                        
-                        $counter++;
-                    }
+    }
 
-                        $this->pdo = null;
-                        return $row;
 
-                }catch(\PDOException $e)    {
-                        $res = ("Connection failed: " . $e->message);
-                        $this->pdo = null;
-                        return $res;
-                }
-                
+    //  funzione invocata dal ControlPanel (per motivi di indirizzo relativo)
+    public function myCPQuery($query = null)
+    {
+        $row = array();
+        $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
+        try {
+            $counter = 1;
+            $this->pdo = new \PDO($dir, null, null, null);
+            foreach ($this->pdo->query($query, \PDO::FETCH_ASSOC) as $key => $value) {
+                $row[$counter] = $value;
+                // aggiungo il campo indice
+                $a = array("indice" => strval($counter));
+                $row[$counter] = $a + $row[$counter];
+
+                $counter++;
             }
-            public function myQuery($query = null)
-            {
-                $row = array();
-                $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
-                try {
-                        $counter = 1;
-                        $this->pdo  = new \PDO($dir, null, null, null);
-                        foreach ($this->pdo->query($query, \PDO::FETCH_ASSOC) as $key=>$value)
-                    {
-                        $row[$counter] = $value;
-                        $counter++;
-                    }
 
-                        $this->pdo = null;
-                        return $row;
+            $this->pdo = null;
+            return $row;
 
-                }catch(\PDOException $e)    {
-                        $res = ("Connection failed: " . $e->message);
-                        $this->pdo = null;
-                        return $res;
-                }
-                
+        } catch (\PDOException $e) {
+            $res = ("Connection failed: " . $e->message);
+            $this->pdo = null;
+            return $res;
+        }
+
+    }
+    public function myQuery($query = null)
+    {
+        $row = array();
+        $dir = 'sqlite:' . Config::PATH_TO_SQLITE_FILE;
+        try {
+            $counter = 1;
+            $this->pdo = new \PDO($dir, null, null, null);
+            foreach ($this->pdo->query($query, \PDO::FETCH_ASSOC) as $key => $value) {
+                $row[$counter] = $value;
+                $counter++;
             }
-    
-    
+
+            $this->pdo = null;
+            return $row;
+
+        } catch (\PDOException $e) {
+            $res = ("Connection failed: " . $e->message);
+            $this->pdo = null;
+            return $res;
+        }
+
+    }
+
+
+    public function myUpdate($key, $value, $id)
+    {
+        $query = "UPDATE " . Config::TNAME . " SET $key = \"$value\" WHERE id = $id";
+        $n = $this->myCPQuery($query);
+        return $n;
+    }
+
 }
 ?>

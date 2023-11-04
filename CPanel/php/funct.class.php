@@ -1,13 +1,14 @@
-
 <?php
 
-class Services {
+class Services
+{
 
   // Properties
-  
+
 
   // Methods
-  public function validate($data) 
+
+  public function validate($data)
   {
     // questa funzione sanitizza i dati passati come parametri
     // nei forms
@@ -25,5 +26,7 @@ class Services {
     $html .= '></i>&nbsp;';
     return $html;
   }
+
+  
 }
 ?>
