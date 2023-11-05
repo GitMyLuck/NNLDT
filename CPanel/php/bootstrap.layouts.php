@@ -235,12 +235,13 @@ class bootLayout
    */
   public function SuperCellaData($stato, $value, $id)
   {
+    include_once "funct.class.php";
+    $service = new services();
     // per stato "new" $value = today
     ($value == null || $value == "") ? $date = date('Y-m-d', time()) : $date = date('Y-m-d', $value);
 
     $disabled = $this->disableState($stato);
-
-    $newT = "";
+    $sendBtn = $service->sendBtn($disabled);
     $newT = <<<EOT
 
 
@@ -252,14 +253,7 @@ class bootLayout
                     <input type="hidden" name="id" value="$id">
                   </div>
               <hr>
-                  <div class="row">
-                    <div class="col-sm-8">
-                      <p>&nbsp;</p>
-                    </div>
-                    <div class="col-sm-4">
-                      <button type="send" class="btn btn-primary special-button justify-content-md-end" id="sendButton" $disabled >invia</button>
-                    </div>
-                  </div>
+                  $sendBtn
           </form>
 EOT;
     $newT .= PHP_EOL;
@@ -268,9 +262,11 @@ EOT;
 
   public function SuperCellaTesto($stato, $value, $id)
   {
-    $newT = "";
+    include_once "funct.class.php";
+    $service = new services();
 
     $disabled = $this->disableState($stato);
+    $sendBtn = $service->sendBtn($disabled);
     $newT = <<<EOT
 
         <form action="general.php" method="POST">
@@ -279,17 +275,7 @@ EOT;
                 <input type="hidden" name="id" value="$id">
               </div>
             <hr>
-              <div class="row">
-                    <div class="col-sm-5">
-                        <p>&nbsp;</p>
-                    </div>
-                    <div class="col-sm-5">
-                        <p>&nbsp;</p>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="send" class="btn btn-primary special-button" id="sendButton" $disabled>invia</button>
-                    </div>
-              </div>
+              $sendBtn
         </form>
 EOT;
 

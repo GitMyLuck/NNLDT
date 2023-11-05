@@ -154,23 +154,19 @@ $conn = null;
         </h2>
       </div>
       <div class="col-sm-4">
-        <div id="action-buttons" style="float:right;" class="btn-group" role="group"
-          aria-label="Basic radio toggle button group">
-          <input type="radio" class="btn-check" name="btnaction" id="close" autocomplete="off" checked
-            onclick="selectAction($(this), 'close');">
-          <label class="btn btn-outline-primary" for="close">
+        <div id="action-buttons" style="float:right;" class="btn-group" role="group">
+          <button type="button" class="btn btn-outline-primary" name="close" id="close" onclick="selectAction($(this));">
             <?php echo ($services->icon("fa-down-left-and-up-right-to-center", "fa-xl")); ?>close
-          </label>
-          <input type="radio" class="btn-check" name="btnaction" id="open" autocomplete="off"
-            onclick="selectAction($(this), 'open');">
-          <label class="btn btn-outline-primary" for="open">
+          </button>
+          <button type="button" class="btn btn-outline-primary" name="open" id="open" onclick="selectAction($(this));">
             <?php echo ($services->icon("fa-up-right-and-down-left-from-center", "fa-xl")); ?>open
-          </label>
-          <input type="radio" class="btn-check" name="btnaction" id="search" autocomplete="off"
-            onclick="selectAction($(this), 'search');">
-          <label class="btn btn-outline-primary" for="search">
+          </button>
+          <button type="button" class="btn btn-outline-primary" name="search" id="search" onclick="selectAction($(this));">
             <?php echo ($services->icon("fa-search", "fa-xl")); ?>search
-          </label>
+          </button>
+          <button type="button" class="btn btn-outline-primary" name="refresh" id="refresh" onclick="selectAction($(this));">
+            <?php echo ($services->icon("fa-arrows-rotate", "fa-xl")); ?>refresh
+          </button>
         </div>
       </div>
     </div> <!-- fine riga pulsantiera -->
@@ -216,33 +212,10 @@ $conn = null;
     });
   </script>
   <?php
-
-  $r = upload("data");
-  $r = upload("testo");
-  function upload($type)
-  {
-    
-    if (isset($_POST[$type]) && isset($_POST["id"])) {
-
-      $value = $_POST[$type];
-      $id = $_POST["id"];
-      // caso speciale "data"
-      if ($type === "data")   {
-      (isset($_POST["data"])) ? $data = $_POST["data"] : $data = "2023/05/17";
-      $new_data = strtotime($data);
-      $value = $new_data;
-      }
-
-      $conn = new CPSQLiteConnection();
-
-      //  UPDATE 
-      $n = $conn->myUpdate($type, $value, $id);
-      var_dump($n);
-      // Distruggi connessione
-      $conn = null;
-      return $conn;
-    }
-  }
+  // sostituire con un foreach appena completate tutte le coonne
+  $r = $services->upload("data", $_POST);
+  $r = $services->upload("testo", $_POST);
+  
 
 
   ?>

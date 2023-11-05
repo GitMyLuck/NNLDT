@@ -1,7 +1,7 @@
 <!doctype html>
 
 <!-- ========== Start Dark ========== -->
-<html lang="it" data-bs-theme="light">
+<html lang="it" data-bs-theme="dark">
 <!-- ========== End ========== -->
 
 
@@ -17,7 +17,7 @@
     <!--<link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">-->
     <script src="assets/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script src="scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
-    <script src="assets/js/color-modes.js" type="text/javascript"></script>
+    <!--<script src="assets/js/color-modes.js" type="text/javascript"></script>-->
     <script src="scripts/gestioni.js" type="text/javascript"></script>
     <script src="assets/js/all.min.js" type="text/javascript"></script>
 

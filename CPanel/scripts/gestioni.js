@@ -27,10 +27,9 @@ function selectState(btn, state) {
 
 }
 
-function selectAction(btn, action) {
+function selectAction(btn) {
     var b = btn[0].id;
-    var ac = action;
-    switch (ac) {
+    switch (b) {
         case "close":
             // statements here
             break;
