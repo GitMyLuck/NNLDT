@@ -193,10 +193,12 @@ class bootLayout
               $text .= $this->SuperCellaData($state, $value, $new["id"]);
               break;
             case "testo":
-              $header = "testo";
-
               $text .= Config::TAB6;
               $text .= $this->SuperCellaTesto($state, $value, $new["id"]);
+              break;
+            case "data_evento":
+              $text .= Config::TAB6;
+              $text .= $this->SuperCellaDataEvento($state, $value, $new["id"]);
               break;
             default:
               // default running code here
@@ -281,6 +283,41 @@ EOT;
 
     return $newT;
   }
+
+  //       data_evento    
+  /**
+   * Summary of SuperCellaDataEvento
+   * @param   string  $stato  stato dell'app (read, write, new)
+   * @param   string  $value  valore data
+   * @param   string  $id     id univoco del record per indirizzare variazione
+   * @return  string  $newT..
+   */
+  public function SuperCellaDataEvento($stato, $value, $id)
+  {
+    include_once "funct.class.php";
+    $service = new services();
+    // per stato "new" $value = today
+    ($value == null || $value == "") ? $date = date('Y-m-d', time()) : $date = date('Y-m-d', $value);
+
+    $disabled = $this->disableState($stato);
+    $sendBtn = $service->sendBtn($disabled);
+    $newT = <<<EOT
+
+
+          <form action="general.php" method="POST">
+                  
+                  <div class="row">
+                    <label class="active" for="StandardData">Data</label>
+                    <input type="date" class="special-date" id="StandardData" name="data_evento" value="$date" $disabled>
+                    <input type="hidden" name="id" value="$id">
+                  </div>
+              <hr>
+                  $sendBtn
+          </form>
+EOT;
+    $newT .= PHP_EOL;
+    return $newT;
+  } // end of creaSuperCellaDataEvento
 
 } // end of class
 

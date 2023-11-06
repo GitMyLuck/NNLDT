@@ -27,17 +27,28 @@ function selectState(btn, state) {
 
 }
 
-function selectAction(btn) {
+function selectAction(btn, id) {
     var b = btn[0].id;
     switch (b) {
         case "close":
-            // statements here
+            // chiudi tutti gli accordion
+            $(".accordion-collapse").collapse("hide");
+            break;
+        case "open":
+            // apri tutti gli accordion
+            $(".accordion-collapse").collapse("show");
+            break;
+        case "refresh":
+            if ( id == '0' )  {
+                location.href = 'general.php';
+            } else {
+                location.href = 'general.php?id=' + id;
+            }
             break;
         case "search":
             $("html, body").animate({ scrollTop: 0 }, 100);
             break;
         default:
-
-
-    }
+            break;
+                }
 }

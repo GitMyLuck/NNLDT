@@ -155,16 +155,16 @@ $conn = null;
       </div>
       <div class="col-sm-4">
         <div id="action-buttons" style="float:right;" class="btn-group" role="group">
-          <button type="button" class="btn btn-outline-primary" name="close" id="close" onclick="selectAction($(this));">
+          <button type="button" class="btn btn-outline-primary" id="close" onclick="selectAction($(this), '<?php echo($new_id)?>');">
             <?php echo ($services->icon("fa-down-left-and-up-right-to-center", "fa-xl")); ?>close
           </button>
-          <button type="button" class="btn btn-outline-primary" name="open" id="open" onclick="selectAction($(this));">
+          <button type="button" class="btn btn-outline-primary" name="open" id="open" onclick="selectAction($(this), '<?php echo($new_id)?>');">
             <?php echo ($services->icon("fa-up-right-and-down-left-from-center", "fa-xl")); ?>open
           </button>
-          <button type="button" class="btn btn-outline-primary" name="search" id="search" onclick="selectAction($(this));">
+          <button type="button" class="btn btn-outline-primary" name="search" id="search" onclick="selectAction($(this), '<?php echo($new_id)?>');">
             <?php echo ($services->icon("fa-search", "fa-xl")); ?>search
           </button>
-          <button type="button" class="btn btn-outline-primary" name="refresh" id="refresh" onclick="selectAction($(this));">
+          <button type="button" class="btn btn-outline-primary" name="refresh" id="refresh" onclick="selectAction($(this), '<?php echo($new_id)?>');">
             <?php echo ($services->icon("fa-arrows-rotate", "fa-xl")); ?>refresh
           </button>
         </div>
@@ -188,7 +188,7 @@ $conn = null;
 
   </div> <!-- fine  Container  -->
   <script type="text/javascript">
-    $(document).ready(function (event) {
+    $(document).ready(function () {
       // attiva tooltips
       //$('[data-bs-toggle="tooltip"]').tooltip();
 
