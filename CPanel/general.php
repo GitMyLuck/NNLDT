@@ -215,6 +215,8 @@ $conn = null;
   // sostituire con un foreach appena completate tutte le coonne
   $r = $services->upload("data", $_POST);
   $r = $services->upload("testo", $_POST);
+  $r = $services->upload("data_evento", $_POST);
+  $r = $services->upload("titolo", $_POST);
   
 
 

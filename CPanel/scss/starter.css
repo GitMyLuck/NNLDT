@@ -12491,7 +12491,7 @@ body {
 }
 
 .special-date {
-  min-height: 2rem;
+  min-height: 2.5rem;
   background-color: rgb(46, 75, 85);
   border-radius: 5px;
 }

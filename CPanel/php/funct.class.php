@@ -42,16 +42,16 @@ class Services
   public function sendBtn($disabled)
   {
     $html = <<<EOT
-                <div class="row">
-                    <div class="col-sm-8">
-                        <p>&nbsp;</p>
-                    </div>
-                    <div class="col-sm-4">
-                        <button type="send" class="btn btn-primary special-button justify-content-md-end" id="sendButton" title="invia" $disabled >
+        <div class="row">
+                      <div class="col-sm-8">
+                            <p>&nbsp;</p>
+                        </div>
+                      <div class="col-sm-4">
+                          <button type="send" class="btn btn-primary special-button justify-content-md-end" id="sendButton" title="invia" $disabled >
                             <i class="fa-solid fa-arrow-fas fa-arrow-right fa-xl"></i>
-                        </button>
-                    </div>
-                </div>
+                          </button>
+                      </div>
+                     </div>
 EOT;
     $html .= PHP_EOL;
     return $html;
@@ -72,8 +72,9 @@ EOT;
       $value = $array[$type];
       $id = $array["id"];
       // caso speciale "data"
-      if ($type === "data")   {
+      if ($type === "data" || $type === "data_evento")   {
       (isset($array["data"])) ? $data = $array["data"] : $data = "2023/05/17";
+      (isset($array["data_evento"])) ? $data = $array["data_evento"] : $data = "2023/05/17";
       $new_data = strtotime($data);
       $value = $new_data;
       }

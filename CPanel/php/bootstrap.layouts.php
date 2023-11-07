@@ -116,7 +116,9 @@ class bootLayout
     // $headers = intestazione colonne (fornisce i nomi delle supercelle)
     // $state = indica lo stato per costruire la pagina
 
-
+    //  creo istanza classe services
+    include_once "funct.class.php";
+    $service = new services();
     //  contatore generale delle SuperCelle
     $counter = 0;
 
@@ -174,8 +176,19 @@ class bootLayout
           //  corpo vero e proprio
           $text .= Config::TAB5 . '<div class="accordion-body">' . PHP_EOL;
 
+          $id = $new["id"];
+          $disabled = $this->disableState($state);
+          $sendBtn = $service->sendBtn($disabled);
+          //  inizio del form
+          $text .= <<<EOT
+
+                    <form action="general.php" method="POST">
+                  
+                      <div class="row">
+EOT;
+
           // si preparano i parametri per chiamare la funzione di costruzione
-          // della SuperCella
+          // dei contenuti della SuperCella
           $value = null;
           // caso read - write - default
           if ($state == "read" || $state == "write" || $state == "") {
@@ -190,23 +203,36 @@ class bootLayout
             case "data":
               
               $text .= Config::TAB6;
-              $text .= $this->SuperCellaData($state, $value, $new["id"]);
+              $text .= $this->SuperCellaData($disabled, $value, $id);
               break;
             case "testo":
               $text .= Config::TAB6;
-              $text .= $this->SuperCellaTesto($state, $value, $new["id"]);
+              $text .= $this->SuperCellaTesto($disabled, $value, $id);
               break;
             case "data_evento":
               $text .= Config::TAB6;
-              $text .= $this->SuperCellaDataEvento($state, $value, $new["id"]);
+              $text .= $this->SuperCellaDataEvento($disabled, $value, $id);
               break;
+            case "titolo":
+                $text .= Config::TAB6;
+                $text .= $this->SuperCellaTitolo($disabled, $value, $id);
+                break;
             default:
               // default running code here
               $text .= Config::TAB6 . '<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>' . PHP_EOL;
 
           }
 
+          //    chiusura della row contenuta nel form
+          $text .= <<<EOT
+                          <input type="hidden" name="id" value="$id">
+                      </div>
+                      <hr>
+              $sendBtn
+                </form>
+EOT;
 
+          $text .= PHP_EOL;
           // chiusura del corpo accordion
           $text .= Config::TAB5 . '</div><!-- fine accordion-body -->' . PHP_EOL;
           $text .= Config::TAB4 . '</div><!-- fine accordion -->' . PHP_EOL;
@@ -230,95 +256,90 @@ class bootLayout
   //       data     
   /**
    * Summary of SuperCellaData
-   * @param   string  $stato  stato dell'app (read, write, new)
-   * @param   string  $value  valore data
-   * @param   string  $id     id univoco del record per indirizzare variazione
+   * @param   string  $disabled  valore di disabilità dato dallo stato dell'app (read, write, new)
+   * @param   string  $value      valore in questo caso la data
+   * @param   string  $id         id univoco del record per indirizzare variazione
    * @return  string  $newT..
    */
-  public function SuperCellaData($stato, $value, $id)
+  public function SuperCellaData($disabled, $value, $id)
   {
-    include_once "funct.class.php";
-    $service = new services();
+    
     // per stato "new" $value = today
     ($value == null || $value == "") ? $date = date('Y-m-d', time()) : $date = date('Y-m-d', $value);
 
-    $disabled = $this->disableState($stato);
-    $sendBtn = $service->sendBtn($disabled);
+    
     $newT = <<<EOT
 
-
-          <form action="general.php" method="POST">
-                  
-                  <div class="row">
-                    <label class="active" for="StandardData">Data</label>
-                    <input type="date" class="special-date" id="StandardData" name="data" value="$date" $disabled>
-                    <input type="hidden" name="id" value="$id">
-                  </div>
-              <hr>
-                  $sendBtn
-          </form>
+                          <label class="active" for="StandardData">Data</label>
+                          <input type="date" class="special-date" id="StandardData" name="data" value="$date" $disabled>
 EOT;
+
     $newT .= PHP_EOL;
     return $newT;
   } // end of creaSuperCellaData
 
-  public function SuperCellaTesto($stato, $value, $id)
+  //       testo    
+  /**
+   * Summary of SuperCellaData
+   * @param   string  $disabled  valore di disabilità dato dallo stato dell'app (read, write, new)
+   * @param   string  $value      valore in questo caso il testo della notizia
+   * @param   string  $id         id univoco del record per indirizzare variazione
+   * @return  string  $newT..
+   */
+  public function SuperCellaTesto($disabled, $value, $id)
   {
-    include_once "funct.class.php";
-    $service = new services();
-
-    $disabled = $this->disableState($stato);
-    $sendBtn = $service->sendBtn($disabled);
     $newT = <<<EOT
 
-        <form action="general.php" method="POST">
-              <div class="row">
-                <textarea class="form-control" name="testo" aria-label="inserisci testo" $disabled >$value</textarea>
-                <input type="hidden" name="id" value="$id">
-              </div>
-            <hr>
-              $sendBtn
-        </form>
+                          <textarea class="form-control" name="testo" aria-label="inserisci testo" $disabled >$value</textarea>
 EOT;
 
     return $newT;
   }
 
+
   //       data_evento    
   /**
    * Summary of SuperCellaDataEvento
-   * @param   string  $stato  stato dell'app (read, write, new)
-   * @param   string  $value  valore data
+   * @param   string  $disabled  valore di disabilità dato dallo stato dell'app (read, write, new)
+   * @param   string  $value  valore data_evento
    * @param   string  $id     id univoco del record per indirizzare variazione
    * @return  string  $newT..
    */
-  public function SuperCellaDataEvento($stato, $value, $id)
+  public function SuperCellaDataEvento($disabled, $value, $id)
   {
-    include_once "funct.class.php";
-    $service = new services();
+    
     // per stato "new" $value = today
     ($value == null || $value == "") ? $date = date('Y-m-d', time()) : $date = date('Y-m-d', $value);
 
-    $disabled = $this->disableState($stato);
-    $sendBtn = $service->sendBtn($disabled);
     $newT = <<<EOT
-
-
-          <form action="general.php" method="POST">
-                  
-                  <div class="row">
-                    <label class="active" for="StandardData">Data</label>
-                    <input type="date" class="special-date" id="StandardData" name="data_evento" value="$date" $disabled>
-                    <input type="hidden" name="id" value="$id">
-                  </div>
-              <hr>
-                  $sendBtn
-          </form>
+                          <label class="active" for="StandardData">Data Evento</label>
+                          <input type="date" class="special-date" id="StandardData" name="data_evento" value="$date" $disabled>
+                    
 EOT;
     $newT .= PHP_EOL;
     return $newT;
   } // end of creaSuperCellaDataEvento
 
+
+  //       titolo    
+  /**
+   * Summary of SuperCellaDataEvento
+   * @param   string  $disabled   valore di disabilità dato dallo stato dell'app (read, write, new)
+   * @param   string  $value      valore titolo
+   * @param   string  $id         id univoco del record per indirizzare variazione
+   * @return  string  $newT..
+   */
+  public function SuperCellaTitolo($disabled, $value, $id)
+  {
+    
+    $newT = <<<EOT
+
+                <label for="titolo" class="active">Titolo Della Notizia</label>
+                <input type="text" class="form-control special-date" name="titolo" id="titolo" placeholder="titolo.." value="$value">
+EOT;
+
+    return $newT;
+  }
 } // end of class
 
 ?>
